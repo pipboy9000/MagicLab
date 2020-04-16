@@ -15,7 +15,7 @@ ctx.fillRect(0, 0, width, height);
 
 let angle = 0;
 
-let minSegementLength = 30;
+let minSegementLength = 100;
 let randSegmentLength = 0;
 let minJointRadius = 20;
 let randJointRadius = 0;
@@ -98,7 +98,7 @@ function drawNextSegment() {
 
     let dist = minSegementLength + Math.random() * randSegmentLength;
 
-    let hue = performance.now() / colorChangeRate % 360
+    let hue = performance.now() * 10 / colorChangeRate % 360
 
     ctx.shadowBlur = 20;
     ctx.shadowColor = `hsl(${hue},70%,70%`;
@@ -189,7 +189,7 @@ render();
 
 //setters
 export function setMinSegmentLength(val) {
-    randSegmentLength = Math.abs(+val - minSegementLength) * 50;
+    randSegmentLength = Math.abs(+val - minSegementLength) * 20;
     minSegementLength = +val;
 }
 
@@ -198,7 +198,7 @@ export function setRandSegmentLength(val) {
 }
 
 export function setMinJointRadius(val) {
-    randJointRadius = Math.abs(+val - minJointRadius) * 50;
+    randJointRadius = Math.abs(+val - minJointRadius) * 20;
     minJointRadius = +val;
 }
 
@@ -207,7 +207,7 @@ export function setRandJointRadius(val) {
 }
 
 export function setMinJointAngle(val) {
-    randJointAngle = Math.abs(+val - minJointAngle) * 50;
+    randJointAngle = Math.abs(+val - minJointAngle) * 20;
     minJointAngle = +val;
 }
 
