@@ -189,7 +189,7 @@ render();
 
 //setters
 export function setMinSegmentLength(val) {
-    randSegmentLength = Math.abs(+val - minSegementLength) * 20;
+    randSegmentLength = Math.abs(+val - minSegementLength) * 10;
     minSegementLength = +val;
 }
 
@@ -198,7 +198,7 @@ export function setRandSegmentLength(val) {
 }
 
 export function setMinJointRadius(val) {
-    randJointRadius = Math.abs(+val - minJointRadius) * 20;
+    randJointRadius = Math.abs(+val - minJointRadius) * 10;
     minJointRadius = +val;
 }
 
@@ -207,7 +207,7 @@ export function setRandJointRadius(val) {
 }
 
 export function setMinJointAngle(val) {
-    randJointAngle = Math.abs(+val - minJointAngle) * 20;
+    randJointAngle = Math.abs(+val - minJointAngle) * 10;
     minJointAngle = +val;
 }
 
