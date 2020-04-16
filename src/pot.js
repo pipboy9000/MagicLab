@@ -155,7 +155,7 @@ function drawNextSegment() {
 
     //move camera
     points.push({ x: nextX, y: nextY });
-    if (points.length > 30) {
+    if (points.length > 15) {
         points.shift();
     }
 
