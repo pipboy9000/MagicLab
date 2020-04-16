@@ -36,13 +36,13 @@ function setRandJointAngle(e) {
 //input functions
 function init() {
     document.getElementById("minSegmentLength").addEventListener('input', setMinSegmentLength);
-    document.getElementById("randSegmentLength").addEventListener('input', setRandSegmentLength);
+    // document.getElementById("randSegmentLength").addEventListener('input', setRandSegmentLength);
     document.getElementById("colorChangeRate").addEventListener('input', setColorChangeRate);
     document.getElementById("fade").addEventListener('input', setFade);
     document.getElementById("minJointRadius").addEventListener('input', setMinJointRadius);
-    document.getElementById("randJointRadius").addEventListener('input', setRandJointRadius);
+    // document.getElementById("randJointRadius").addEventListener('input', setRandJointRadius);
     document.getElementById("minJointAngle").addEventListener('input', setMinJointAngle);
-    document.getElementById("randJointAngle").addEventListener('input', setRandJointAngle);
+    // document.getElementById("randJointAngle").addEventListener('input', setRandJointAngle);
 }
 
 window.addEventListener('load', init);
