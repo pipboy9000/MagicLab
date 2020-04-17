@@ -11,18 +11,25 @@ ctx.strokeStyle = "#29ff7e"
 ctx.lineWidth = 10;
 ctx.lineCap = 'round';
 
-ctx.fillRect(0, 0, width, height);
+// ctx.fillRect(0, 0, width, height);
 
 let angle = 0;
-
-let minSegementLength = 100;
-let randSegmentLength = 0;
-let minJointRadius = 20;
-let randJointRadius = 0;
-let minJointAngle = 0.7853981634;
-let randJointAngle = 0;
-let colorChangeRate = 50;
+let color = 200;
 let fade = 0.07;
+let tranSpeed = 5;
+
+let segLength = 0;
+let targetSegLength = 0;
+let randSegLength = 0;
+
+let cornerRad = 0;
+let targetTornerRad = 0;
+let randCornerRad = 0;
+
+let cornerAngle = 0;
+let targetCornerAngle = 0;
+let randCornerAngle = 0;
+
 
 //start position
 let startX = width / 2
@@ -85,8 +92,16 @@ function avgPoints() {
 }
 
 function fadeCanvas() {
-    ctx.fillStyle = "rgba(0,0,0," + fade + ")";
+    // ctx.fillStyle = "rgba(0,0,0," + fade + ")";
+    // ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+
+    ctx.save();
+    ctx.globalAlpha = fade;
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = '#FFF';
     ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+    ctx.restore();
+
 }
 
 function drawNextSegment() {
@@ -96,9 +111,9 @@ function drawNextSegment() {
 
     fadeCanvas();
 
-    let dist = minSegementLength + Math.random() * randSegmentLength;
+    let dist = segLength + Math.random() * randSegLength;
 
-    let hue = performance.now() * 10 / colorChangeRate % 360
+    let hue = color % 360;
 
     ctx.shadowBlur = 20;
     ctx.shadowColor = `hsl(${hue},70%,70%`;
@@ -107,13 +122,13 @@ function drawNextSegment() {
     let nextX = x + Math.cos(angle) * dist;
     let nextY = y + Math.sin(angle) * dist;
 
-    let nextAngle = angle + (Math.random() * randJointAngle) + minJointAngle;
+    let nextAngle = angle + (Math.random() * randCornerAngle) + cornerAngle;
 
-    let cornerRad = Math.random() * randJointRadius + minJointRadius;
+    let cRad = Math.random() * randCornerRad + cornerRad;
 
     //next joint center
-    let cornerCenterX = nextX + (Math.cos(angle + Math.PI / 2)) * cornerRad;
-    let cornerCenterY = nextY + (Math.sin(angle + Math.PI / 2)) * cornerRad;
+    let cornerCenterX = nextX + (Math.cos(angle + Math.PI / 2)) * cRad;
+    let cornerCenterY = nextY + (Math.sin(angle + Math.PI / 2)) * cRad;
 
     //outline
     ctx.strokeStyle = `hsl(${hue},100%,50%`;;
@@ -127,7 +142,7 @@ function drawNextSegment() {
 
     //joint outline
     ctx.beginPath();
-    ctx.arc(cornerCenterX, cornerCenterY, cornerRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
+    ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
 
     ctx.lineWidth = 10;
@@ -141,15 +156,15 @@ function drawNextSegment() {
 
     //joint
     ctx.beginPath();
-    ctx.arc(cornerCenterX, cornerCenterY, cornerRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
+    ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
 
 
 
 
     //set to arc endpoint
-    x = cornerCenterX + Math.cos(nextAngle - Math.PI / 2) * cornerRad;
-    y = cornerCenterY + Math.sin(nextAngle - Math.PI / 2) * cornerRad;
+    x = cornerCenterX + Math.cos(nextAngle - Math.PI / 2) * cRad;
+    y = cornerCenterY + Math.sin(nextAngle - Math.PI / 2) * cRad;
 
     angle = nextAngle;
 
@@ -172,6 +187,10 @@ function drawNextSegment() {
     }
 }
 
+function logState() {
+    console.log('seg length: ' + segLength + ' |cornder rad: ' + cornerRad + ' |corner angle: ' + cornerAngle);
+}
+
 function render(d) {
 
     drawNextSegment();
@@ -179,44 +198,35 @@ function render(d) {
     requestAnimationFrame(render);
 
     //decrease all randoms
-    if (randJointAngle > 0) randJointAngle *= 0.975;
-    if (randJointRadius > 0) randJointRadius *= 0.975;
-    if (randSegmentLength > 0) randSegmentLength *= 0.975;
+    if (randCornerAngle > 0) randCornerAngle *= 0.975;
+    if (randCornerRad > 0) randCornerRad *= 0.975;
+    if (randSegLength > 0) randSegLength *= 0.975;
 
 }
 
 render();
 
 //setters
-export function setMinSegmentLength(val) {
-    randSegmentLength = Math.abs(+val - minSegementLength) * 10;
-    minSegementLength = +val;
+export function setSegLength(val) {
+    randSegLength = Math.abs(+val - segLength) * 10;
+    segLength = +val;
+    logState();
 }
 
-export function setRandSegmentLength(val) {
-    randSegmentLength = +val;
+export function setCornerRad(val) {
+    randCornerRad = Math.abs(+val - cornerRad) * 10;
+    cornerRad = +val;
+    logState();
 }
 
-export function setMinJointRadius(val) {
-    randJointRadius = Math.abs(+val - minJointRadius) * 10;
-    minJointRadius = +val;
+export function setCornerAngle(val) {
+    randCornerAngle = Math.abs(+val - cornerAngle) * 10;
+    cornerAngle = +val;
+    logState();
 }
 
-export function setRandJointRadius(val) {
-    randJointRadius = +val;
-}
-
-export function setMinJointAngle(val) {
-    randJointAngle = Math.abs(+val - minJointAngle) * 10;
-    minJointAngle = +val;
-}
-
-export function setRandJointAngle(val) {
-    randJointAngle = +val;
-}
-
-export function setColorChangeRate(val) {
-    colorChangeRate = +val;
+export function setColor(val) {
+    color = +val;
 }
 
 export function setFade(val) {
