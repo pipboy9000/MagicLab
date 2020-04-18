@@ -9,7 +9,7 @@
     "build": "webpack",
     "build-i": "npm-run-all -s build copy-index",
     "webpack-dev-server": "webpack-dev-server --config webpack.config-dev.js --open",
-    "dev": "npm-run-all -s build copy-index webpack-dev-server",
+    "dev": "npm-run-all -s build webpack-dev-server",
     "start": "cd dist && live-server"
   },
   "author": "",

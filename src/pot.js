@@ -14,7 +14,7 @@ ctx.lineCap = 'round';
 let angle = 0;
 let color = 200;
 let fade = 0.07;
-let tranSpeed = 50;
+let tranSpeed = 20;
 
 //segment length
 let length = 0;
@@ -33,8 +33,8 @@ let randCornerAngle = 0;
 
 
 //start position
-let startX = width / 2
-let startY = height / 2;
+let startX = 320;
+let startY = 350;
 
 let x = startX;
 let y = startY;
@@ -44,10 +44,10 @@ let points = [];
 
 //"cam"
 let camPosX = startX;
-let targetCamPosX = 300;
+let targetCamPosX = startX;
 
 let camPosY = startY;
-let targetCamPosY = 300;
+let targetCamPosY = startY;
 
 let active = true;
 
@@ -64,26 +64,28 @@ export function restart() {
     color = 200;
     fade = 0.07;
 
-    length = 0;
-    targetLength = 0;
+    length = 5;
+    targetLength = 1.5;
     randLength = 0;
 
-    rad = 0;
+    rad = 30;
     targetRad = 0;
     randRad = 0;
 
     cornerAngle = 0;
-    targetCornerAngle = 0;
+    targetCornerAngle = 1.5;
     randCornerAngle = 0;
 
     resetCam();
+
+    flashColor("white")
 }
 
 function resetCam() {
-    targetCamPosX = 0;
-    targetCamPosY = 0;
-    camPosX = 0;
-    camPosY = 0;
+    targetCamPosX = startX;
+    targetCamPosY = startY;
+    camPosX = startX;
+    camPosY = startY;
     ctx.setTransform(
         1,
         0,
@@ -245,7 +247,7 @@ function render(d) {
 
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
-    randCornerAngle = Math.abs(dAngle * 10);
+    randCornerAngle = Math.abs(dAngle * 20);
 
     let dRad = (targetRad - rad) / tranSpeed;
     rad += dRad;
@@ -263,16 +265,19 @@ render();
 
 //setters
 export function setSegLength(val) {
+    length = targetLength;
     targetLength = +val;
     logState();
 }
 
 export function setCornerRad(val) {
+    rad = targetRad;
     targetRad = +val;
     logState();
 }
 
 export function setCornerAngle(val) {
+    cornerAngle = targetCornerAngle;
     targetCornerAngle = +val;
     logState();
 }
@@ -285,6 +290,51 @@ export function setFade(val) {
     fade = +val / 255;
 }
 
-export function addRed() {
-    setSegLength(setSegLength + 10);
+function flashColor(c) {
+    switch (c) {
+        case 'blue':
+            ctx.save();
+            ctx.fillStyle = '#aafb';
+            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+            ctx.restore();
+            break;
+
+        case 'green':
+            ctx.save();
+            ctx.fillStyle = '#afab';
+            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+            ctx.restore();
+            break;
+
+        case 'red':
+            ctx.save();
+            ctx.fillStyle = '#faab';
+            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+            ctx.restore();
+            break;
+
+        case 'white':
+            ctx.save();
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+            ctx.restore();
+            break;
+    }
 }
+
+//potion buttons
+export function addBlue() {
+    setSegLength(targetLength + 50);
+    flashColor("blue");
+}
+
+export function addRed() {
+    setCornerRad(targetRad + 50);
+    flashColor("red");
+}
+
+
+export function addGreen() {
+    setCornerAngle(targetCornerAngle + Math.PI / 4)
+    flashColor("green");
+} 

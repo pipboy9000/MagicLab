@@ -29,6 +29,9 @@ function init() {
     document.getElementById("color").addEventListener('input', setColor);
     document.getElementById("fade").addEventListener('input', setFade);
     document.getElementById("restart").addEventListener('mousedown', pot.restart);
+    document.getElementById("addBlue").addEventListener('mousedown', pot.addBlue);
+    document.getElementById("addRed").addEventListener('mousedown', pot.addRed);
+    document.getElementById("addGreen").addEventListener('mousedown', pot.addGreen);
 }
 
 window.addEventListener('load', init);
