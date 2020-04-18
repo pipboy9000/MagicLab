@@ -28,6 +28,7 @@ function init() {
     document.getElementById("cornerAngle").addEventListener('input', setCornerAngle);
     document.getElementById("color").addEventListener('input', setColor);
     document.getElementById("fade").addEventListener('input', setFade);
+    document.getElementById("restart").addEventListener('mousedown', pot.restart);
 }
 
 window.addEventListener('load', init);
