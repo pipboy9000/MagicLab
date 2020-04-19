@@ -14,7 +14,7 @@ ctx.lineCap = 'round';
 let angle = 0;
 let color = 200;
 let fade = 0.07;
-let tranSpeed = 20;
+let tranSpeed = 100;
 
 //segment length
 let length = 0;
@@ -65,15 +65,15 @@ export function restart() {
     fade = 0.07;
 
     length = 5;
-    targetLength = 1.5;
+    targetLength = 5;
     randLength = 0;
 
-    rad = 30;
-    targetRad = 0;
+    rad = 1;
+    targetRad = 1;
     randRad = 0;
 
-    cornerAngle = 0;
-    targetCornerAngle = 1.5;
+    cornerAngle = 1.5707963267948966192313216916398;
+    targetCornerAngle = 1.5707963267948966192313216916398;
     randCornerAngle = 0;
 
     resetCam();
@@ -240,11 +240,6 @@ function render(d) {
 
     requestAnimationFrame(render);
 
-    //decrease all randoms
-    if (randCornerAngle > 0) randCornerAngle *= 0.975;
-    if (randRad > 0) randRad *= 0.975;
-    if (randLength > 0) randLength *= 0.975;
-
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
     randCornerAngle = Math.abs(dAngle * 20);
@@ -294,28 +289,28 @@ function flashColor(c) {
     switch (c) {
         case 'blue':
             ctx.save();
-            ctx.fillStyle = '#aafb';
+            ctx.fillStyle = '#aaf2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'green':
             ctx.save();
-            ctx.fillStyle = '#afab';
+            ctx.fillStyle = '#afa2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'red':
             ctx.save();
-            ctx.fillStyle = '#faab';
+            ctx.fillStyle = '#faa2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'white':
             ctx.save();
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = '#fff8';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
@@ -324,7 +319,7 @@ function flashColor(c) {
 
 //potion buttons
 export function addBlue() {
-    setSegLength(targetLength + 50);
+    setSegLength(targetLength + 100);
     flashColor("blue");
 }
 
@@ -335,6 +330,6 @@ export function addRed() {
 
 
 export function addGreen() {
-    setCornerAngle(targetCornerAngle + Math.PI / 4)
+    setCornerAngle(targetCornerAngle + Math.PI / 8)
     flashColor("green");
 } 

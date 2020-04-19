@@ -22,9 +22,9 @@
     <div class="main">
         <canvas id="canvas" width="600" height="600"></canvas>
         <div class="potions">
-            <button id="addBlue">Add Blue Potion <i class="fas fa-vial"></i></button>
-            <button id="addRed">Add red Potion <i class="fas fa-vial"></i></button>
-            <button id="addGreen">Add green Potion <i class="fas fa-vial"></i></button>
+            <button id="addBlue">Add Blue<i class="fas fa-vial"></i></button>
+            <button id="addRed">Add Red<i class="fas fa-vial"></i></button>
+            <button id="addGreen">Add Green<i class="fas fa-vial"></i></button>
         </div>
         <button id="restart">Restart</button>
 
@@ -52,9 +52,11 @@
         }
 
         .main {
+            width: 100%;
             display: inline-flex;
             flex-direction: column;
             align-items: center;
+            max-width: 500px;
         }
 
         button:focus {

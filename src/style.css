@@ -132,12 +132,10 @@ input[type=range].slider:focus::-ms-fill-upper {
 
 canvas {
   width: 100%;
-  max-width: 500px;
   height: auto;
   max-height: 100%;
   display: inline-block;
   border: 3px solid white;
-  margin: 10px;
   border-radius: 7px;
   box-sizing: border-box;
 }
@@ -151,7 +149,7 @@ label {
 
 .controls{
   display: inline-block;
-  /* width: 100vw; */
+  position: absolute;
   max-width: 300px;
   background: #202020;
   box-sizing: border-box;
@@ -160,23 +158,10 @@ label {
   margin: 10px;
 }
 
-@media only screen and (max-width: 830px) {
-  .controls{
-    /* height: calc(45vh - 20px);
-    width: calc(100vw - 20px); */
-    overflow: auto;
-    max-width: unset;
-  }
-  
-  canvas {
-    height: 50vh;
-    width: auto;
-  }
-}
-
 .potions {
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  margin-top: 15px;
 }
 
 .potions > button {
@@ -186,11 +171,11 @@ label {
   font-weight: bold;
   border-radius: 10px;
   padding: 10px;
-  margin-top: 20px;
   transition: transform 50ms, box-shadow 50ms;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  margin: 10px;
 }
 
 .potions > button > i {
