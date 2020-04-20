@@ -1,4 +1,5 @@
 import * as pot from './pot.js';
+import * as recipe from './recipe.js';
 import './style.css';
 
 function setSegLength(e) {
@@ -21,6 +22,24 @@ function setFade(e) {
     pot.setFade(e.target.value);
 }
 
+function restart() {
+    pot.restart();
+    recipe.restart();
+}
+
+function addBlue() {
+    pot.addBlue();
+    recipe.add('blue');
+}
+function addRed() {
+    pot.addRed();
+    recipe.add('red');
+}
+function addGreen() {
+    pot.addGreen();
+    recipe.add('green');
+}
+
 //input functions
 function init() {
     document.getElementById("segLength").addEventListener('input', setSegLength);
@@ -28,10 +47,10 @@ function init() {
     document.getElementById("cornerAngle").addEventListener('input', setCornerAngle);
     document.getElementById("color").addEventListener('input', setColor);
     document.getElementById("fade").addEventListener('input', setFade);
-    document.getElementById("restart").addEventListener('mousedown', pot.restart);
-    document.getElementById("addBlue").addEventListener('mousedown', pot.addBlue);
-    document.getElementById("addRed").addEventListener('mousedown', pot.addRed);
-    document.getElementById("addGreen").addEventListener('mousedown', pot.addGreen);
+    document.getElementById("restart").addEventListener('mousedown', restart);
+    document.getElementById("addBlue").addEventListener('mousedown', addBlue);
+    document.getElementById("addRed").addEventListener('mousedown', addRed);
+    document.getElementById("addGreen").addEventListener('mousedown', addGreen);
 }
 
 window.addEventListener('load', init);

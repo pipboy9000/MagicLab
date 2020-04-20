@@ -235,3 +235,34 @@ label {
   transform: translate(0px, 6px);
   box-shadow: 0px 0px 0px 3px #e5e5e5, 0px 2px 0px 3px #b0b0b0;
 }
+
+#recipe{
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  background: #232323;
+  border-radius: 30px;
+  margin-top: 20px;
+}
+
+#recipe > i {
+  font-size: 20px;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 50px;
+    margin: 3px;
+    color: #00000099;
+}
+
+#recipe > .blue {
+  background: #3e9dff;;
+}
+
+#recipe > .red {
+  background: #ff1d1d;
+}
+#recipe > .green {
+  background: #23ef29;
+}

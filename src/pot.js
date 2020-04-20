@@ -1,3 +1,5 @@
+import * as recipe from './recipe.js';
+
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext("2d");
 
@@ -8,7 +10,7 @@ let halfHeight = height / 2;
 
 ctx.fillStyle = "black"
 ctx.strokeStyle = "#29ff7e"
-ctx.lineWidth = 10;
+ctx.lineWidth = 3;
 ctx.lineCap = 'round';
 
 let angle = 0;
@@ -17,19 +19,19 @@ let fade = 0.07;
 let tranSpeed = 100;
 
 //segment length
-let length = 0;
-let targetLength = 0;
-let randLength = 0;
+let length;
+let targetLength;
+let randLength;
 
 //corner radius
-let rad = 0;
-let targetRad = 0;
-let randRad = 0;
+let rad;
+let targetRad;
+let randRad;
 
 //corner angle
-let cornerAngle = 1;
-let targetCornerAngle = 0;
-let randCornerAngle = 0;
+let cornerAngle;
+let targetCornerAngle;
+let randCornerAngle;
 
 
 //start position
@@ -78,7 +80,9 @@ export function restart() {
 
     resetCam();
 
-    flashColor("white")
+    flashColor("white");
+
+    recipe.restart();
 }
 
 function resetCam() {
@@ -98,7 +102,7 @@ function resetCam() {
 
 function drawPoint(x, y) {
     ctx.beginPath();
-    ctx.arc(x, y, 15, 0, Math.PI * 2);
+    ctx.arc(x, y, 30, 0, Math.PI * 2);
     ctx.stroke();
 }
 
@@ -172,12 +176,17 @@ function drawNextSegment() {
     let cornerCenterX = nextX + (Math.cos(angle + Math.PI / 2)) * cRad;
     let cornerCenterY = nextY + (Math.sin(angle + Math.PI / 2)) * cRad;
 
+    points.push({ x: cornerCenterX, y: cornerCenterY });
+    if (points.length > 30) {
+        points.shift();
+    }
+
     //outline
     let hue = color % 360;
     ctx.shadowBlur = 20;
     ctx.shadowColor = `hsl(${hue},70%,70%`;
     ctx.strokeStyle = `hsl(${hue},100%,50%`;;
-    ctx.lineWidth = 15;
+    ctx.lineWidth = 5;
 
     //line outline
     ctx.beginPath();
@@ -190,7 +199,7 @@ function drawNextSegment() {
     ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
 
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 3;
     ctx.strokeStyle = "white";
 
     //line
@@ -208,26 +217,46 @@ function drawNextSegment() {
     x = cornerCenterX + Math.cos(nextAngle - Math.PI / 2) * cRad;
     y = cornerCenterY + Math.sin(nextAngle - Math.PI / 2) * cRad;
 
+    points.push({ x, y });
+    if (points.length > 30) {
+        points.shift();
+    }
+
     angle = nextAngle;
 
     //move camera
     points.push({ x: nextX, y: nextY });
-    if (points.length > 15) {
+    if (points.length > 30) {
         points.shift();
     }
 
     let avg = avgPoints();
     setCamPos(avg.x, avg.y);
     drawPoint(avg.x, avg.y)
+
     centerCanvas();
 
     //reset when off screen
     if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
-        // x = startX;
-        // y = startY;
-        // angle = (Math.floor(Math.random() * 9) - 4) * 0.7853981634;
-        gameOver();
+        // gameOver();
+        restart();
     }
+
+    //draw random line from points arr
+    let p1 = points[Math.floor(Math.random() * points.length)]
+    let p2 = points[Math.floor(Math.random() * points.length)]
+
+    ctx.strokeStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.stroke();
+
+    //draw random circle on point
+    ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
+    ctx.beginPath();
+    ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
+    ctx.fill();
 }
 
 function logState() {
@@ -243,36 +272,37 @@ function render(d) {
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
     randCornerAngle = Math.abs(dAngle * 20);
+    if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
 
     let dRad = (targetRad - rad) / tranSpeed;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
+    if (dRad < 0.0005) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed;
     length += dLength;
     randLength = Math.abs(dLength * 10);
+    if (dLength < 0.0005) length = targetLength;
 
 }
 
 
+restart();
 
 render();
 
 //setters
 export function setSegLength(val) {
-    length = targetLength;
     targetLength = +val;
     logState();
 }
 
 export function setCornerRad(val) {
-    rad = targetRad;
     targetRad = +val;
     logState();
 }
 
 export function setCornerAngle(val) {
-    cornerAngle = targetCornerAngle;
     targetCornerAngle = +val;
     logState();
 }
@@ -330,6 +360,6 @@ export function addRed() {
 
 
 export function addGreen() {
-    setCornerAngle(targetCornerAngle + Math.PI / 8)
+    setCornerAngle(targetCornerAngle + Math.PI / 4)
     flashColor("green");
 } 
