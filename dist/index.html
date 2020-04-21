@@ -22,8 +22,13 @@
 <body>
     <div class="main">
         <canvas id="canvas" width="600" height="600"></canvas>
-        <div class="target">
-            <img src="../assets/target-potion.png">
+        <div id="ui">
+            <div id="target">
+
+            </div>
+            <div id="msg">
+
+            </div>
         </div>
         <div id="recipe" class="recipe">
 
@@ -60,6 +65,7 @@
         }
 
         .main {
+            position: relative;
             width: 100%;
             display: inline-flex;
             flex-direction: column;

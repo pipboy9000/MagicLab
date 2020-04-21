@@ -1,4 +1,5 @@
 import * as recipe from './recipe.js';
+import * as ui from './ui.js'
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext("2d");
@@ -74,16 +75,15 @@ function gameOver() {
 }
 
 function checkWin() {
-    let dLength = Math.abs(targetPotion.length / length);
-    let dRad = Math.abs(targetPotion.rad / rad);
-    let dCornerAngle = Math.abs(targetPotion.cornerAngle / cornerAngle);
+    let dLength = Math.abs(length / targetPotion.length);
+    let dRad = Math.abs(rad / targetPotion.rad);
+    let dCornerAngle = Math.abs(cornerAngle / targetPotion.cornerAngle);
 
-    // console.log(dLength, dRad, dCornerAngle);
+    fade = 1.1 - (dLength + dRad + dCornerAngle) / 3;
 
-    fade = 1.05 - 3 / (dLength + dRad + dCornerAngle);
-    // console.log(fade)
-
-    return (dLength + dRad + dCornerAngle < 20);
+    if (dLength + dRad + dCornerAngle > 2.9) {
+        ui.win();
+    }
 }
 
 export function restart() {
@@ -92,7 +92,7 @@ export function restart() {
     y = startY;
 
     angle = 0;
-    color = 200;
+    color = 310;
     fade = 0.07;
 
     length = 5;
@@ -112,6 +112,8 @@ export function restart() {
     flashColor("white");
 
     recipe.restart();
+
+    ui.restart();
 }
 
 function resetCam() {

@@ -1,5 +1,6 @@
 import * as pot from './pot.js';
 import * as recipe from './recipe.js';
+import * as target from './target.js';
 import './style.css';
 
 function setSegLength(e) {

@@ -148,7 +148,7 @@ label {
 }
 
 .controls{
-  display: inline-block;
+  display: none;
   position: absolute;
   max-width: 300px;
   background: #202020;
@@ -265,4 +265,26 @@ label {
 }
 #recipe > .green {
   background: #23ef29;
+}
+
+#ui {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#target {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  transition: width 200ms, height 200ms;
+  opacity: 0.5;
+}
+
+#target:hover{
+  width: 250px;
+  height: 250px;
+  opacity: 1;
 }
