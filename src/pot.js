@@ -43,6 +43,7 @@ let y = startY;
 
 //points to calculate center
 let points = [];
+let flowerPoints = [];
 
 //"cam"
 let camPosX = startX;
@@ -112,8 +113,13 @@ function setCamPos(x, y) {
 }
 
 function centerCanvas() {
-    let dx = (targetCamPosX - camPosX) / 4;
-    let dy = (targetCamPosY - camPosY) / 4;
+    let dx = (targetCamPosX - camPosX) / 10;
+    let dy = (targetCamPosY - camPosY) / 10;
+
+    //how much do we move?
+    let d = Math.sqrt(dx * dx + dy * dy);
+    if (d < 1) return;
+    console.log(d);
 
     camPosX += dx;
     camPosY += dy;
@@ -137,8 +143,6 @@ function avgPoints() {
 
     avg.x /= points.length;
     avg.y /= points.length;
-
-    // console.log(avg);
 
     return avg;
 }
@@ -176,9 +180,9 @@ function drawNextSegment() {
     let cornerCenterX = nextX + (Math.cos(angle + Math.PI / 2)) * cRad;
     let cornerCenterY = nextY + (Math.sin(angle + Math.PI / 2)) * cRad;
 
-    points.push({ x: cornerCenterX, y: cornerCenterY });
-    if (points.length > 30) {
-        points.shift();
+    flowerPoints.push({ x: cornerCenterX, y: cornerCenterY });
+    if (flowerPoints.length > 10) {
+        flowerPoints.shift();
     }
 
     //outline
@@ -218,7 +222,7 @@ function drawNextSegment() {
     y = cornerCenterY + Math.sin(nextAngle - Math.PI / 2) * cRad;
 
     points.push({ x, y });
-    if (points.length > 30) {
+    if (points.length > 70) {
         points.shift();
     }
 
@@ -226,7 +230,7 @@ function drawNextSegment() {
 
     //move camera
     points.push({ x: nextX, y: nextY });
-    if (points.length > 30) {
+    if (points.length > 70) {
         points.shift();
     }
 
@@ -238,25 +242,36 @@ function drawNextSegment() {
 
     //reset when off screen
     if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
-        // gameOver();
         restart();
     }
 
-    //draw random line from points arr
-    let p1 = points[Math.floor(Math.random() * points.length)]
-    let p2 = points[Math.floor(Math.random() * points.length)]
+    //draw flower points
+    let i = 0;
+    while (i < flowerPoints.length - 1) {
+        debugger;
 
-    ctx.strokeStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
-    ctx.beginPath();
-    ctx.moveTo(p1.x, p1.y);
-    ctx.lineTo(p2.x, p2.y);
-    ctx.stroke();
+        //line brightness is determined by length, the shorter the brighter
+        let p1 = flowerPoints[i];
+        let p2 = flowerPoints[i + 1];
+        let l = Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
+        l = Math.floor(l / width * 2 * 15);
+        console.log(l);
+
+        ctx.strokeStyle = '#fff' + l.toString(16)
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+
+        i++;
+    }
+
 
     //draw random circle on point
-    ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
-    ctx.beginPath();
-    ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
-    ctx.fill();
+    // ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
+    // ctx.beginPath();
+    // ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
+    // ctx.fill();
 }
 
 function logState() {
@@ -272,17 +287,17 @@ function render(d) {
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
     randCornerAngle = Math.abs(dAngle * 20);
-    if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
+    if (dAngle < 0.0001) cornerAngle = targetCornerAngle;
 
     let dRad = (targetRad - rad) / tranSpeed;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
-    if (dRad < 0.0005) rad = targetRad;
+    if (dRad < 0.0001) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed;
     length += dLength;
     randLength = Math.abs(dLength * 10);
-    if (dLength < 0.0005) length = targetLength;
+    if (dLength < 0.0001) length = targetLength;
 
 }
 
@@ -360,6 +375,6 @@ export function addRed() {
 
 
 export function addGreen() {
-    setCornerAngle(targetCornerAngle + Math.PI / 4)
+    setCornerAngle(targetCornerAngle + Math.PI / 7)
     flashColor("green");
 } 
