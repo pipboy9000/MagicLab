@@ -22,6 +22,9 @@
 <body>
     <div class="main">
         <canvas id="canvas" width="600" height="600"></canvas>
+        <div class="target">
+            <img src="../assets/target-potion.png">
+        </div>
         <div id="recipe" class="recipe">
 
         </div>
@@ -44,6 +47,7 @@
         <input type="range" min="0" max="360" value="0" id="color">
         <label>Fade</label>
         <input type="range" min="2" max="255" value="20" id="fade">
+        <button id="downloadCanvas">Download</button>
     </div>
 
     <script src="bundle.js"></script>

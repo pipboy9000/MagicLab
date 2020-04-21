@@ -51,6 +51,9 @@ function init() {
     document.getElementById("addBlue").addEventListener('mousedown', addBlue);
     document.getElementById("addRed").addEventListener('mousedown', addRed);
     document.getElementById("addGreen").addEventListener('mousedown', addGreen);
+
+    document.getElementById("downloadCanvas").addEventListener('click', pot.download);
+
 }
 
 window.addEventListener('load', init);

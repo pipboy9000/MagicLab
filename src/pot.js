@@ -16,7 +16,7 @@ ctx.lineCap = 'round';
 let angle = 0;
 let color = 200;
 let fade = 0.07;
-let tranSpeed = 100;
+let tranSpeed = 200;
 
 //segment length
 let length;
@@ -54,8 +54,36 @@ let targetCamPosY = startY;
 
 let active = true;
 
+let targetPotion = {
+    length: 405,
+    rad: 1,
+    cornerAngle: 2.019595277307724
+}
+
+export function download() {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = canvas.toDataURL();
+    a.download = 'target-potion.png';
+    a.click();
+    document.body.removeChild(a);
+}
+
 function gameOver() {
     active = false;
+}
+
+function checkWin() {
+    let dLength = Math.abs(targetPotion.length / length);
+    let dRad = Math.abs(targetPotion.rad / rad);
+    let dCornerAngle = Math.abs(targetPotion.cornerAngle / cornerAngle);
+
+    // console.log(dLength, dRad, dCornerAngle);
+
+    fade = 1.05 - 3 / (dLength + dRad + dCornerAngle);
+    // console.log(fade)
+
+    return (dLength + dRad + dCornerAngle < 20);
 }
 
 export function restart() {
@@ -119,7 +147,6 @@ function centerCanvas() {
     //how much do we move?
     let d = Math.sqrt(dx * dx + dy * dy);
     if (d < 1) return;
-    console.log(d);
 
     camPosX += dx;
     camPosY += dy;
@@ -248,14 +275,12 @@ function drawNextSegment() {
     //draw flower points
     let i = 0;
     while (i < flowerPoints.length - 1) {
-        debugger;
 
         //line brightness is determined by length, the shorter the brighter
         let p1 = flowerPoints[i];
         let p2 = flowerPoints[i + 1];
         let l = Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
         l = Math.floor(l / width * 2 * 15);
-        console.log(l);
 
         ctx.strokeStyle = '#fff' + l.toString(16)
         ctx.beginPath();
@@ -292,12 +317,15 @@ function render(d) {
     let dRad = (targetRad - rad) / tranSpeed;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
-    if (dRad < 0.0001) rad = targetRad;
+    if (dRad < 0.01) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed;
     length += dLength;
     randLength = Math.abs(dLength * 10);
-    if (dLength < 0.0001) length = targetLength;
+    if (dLength < 0.01) length = targetLength;
+
+    checkWin();
+    // console.log(checkWin());
 
 }
 
@@ -308,17 +336,17 @@ render();
 
 //setters
 export function setSegLength(val) {
-    targetLength = +val;
+    targetLength = val;
     logState();
 }
 
 export function setCornerRad(val) {
-    targetRad = +val;
+    targetRad = val;
     logState();
 }
 
 export function setCornerAngle(val) {
-    targetCornerAngle = +val;
+    targetCornerAngle = val;
     logState();
 }
 
