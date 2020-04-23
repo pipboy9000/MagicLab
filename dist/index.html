@@ -67,16 +67,27 @@
         .main {
             position: relative;
             width: 100%;
-            display: flex;
+            display: inline-flex;
             flex-direction: column;
             align-items: center;
             max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            /* margin-left: auto;
+            margin-right: auto; */
         }
 
         button:focus {
             outline: 0;
+        }
+
+        .controls {
+            display: inline-block;
+            position: absolute;
+            max-width: 300px;
+            background: #202020;
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px;
         }
     </style>
 </body>

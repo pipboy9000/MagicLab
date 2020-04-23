@@ -147,17 +147,6 @@ label {
   display: block;
 }
 
-.controls{
-  display: none;
-  position: absolute;
-  max-width: 300px;
-  background: #202020;
-  box-sizing: border-box;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 10px;
-}
-
 .potions {
   display: flex;
   width: 100%;

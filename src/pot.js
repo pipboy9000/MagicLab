@@ -57,8 +57,9 @@ let active = true;
 let win = false;
 
 let targetPotion = {
-    green: 1,
-    blue: 4
+    green: 3,
+    blue: 1,
+    red: 1
 }
 
 export function download() {
@@ -94,6 +95,7 @@ function checkWin() {
     console.log(w);
 
     fade = 1 - Math.min(Math.max(w, 0.02), 0.95);
+    fade = 0.02;
 }
 
 export function restart() {
@@ -103,7 +105,7 @@ export function restart() {
     y = startY;
 
     angle = 0;
-    color = 310;
+    color = 200;
     fade = 0.99;
 
     length = 15;
