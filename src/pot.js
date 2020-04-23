@@ -54,11 +54,11 @@ let camPosY = startY;
 let targetCamPosY = startY;
 
 let active = true;
+let win = false;
 
 let targetPotion = {
-    length: 405,
-    rad: 1,
-    cornerAngle: 2.019595277307724
+    green: 1,
+    blue: 4
 }
 
 export function download() {
@@ -75,15 +75,19 @@ function gameOver() {
 }
 
 function checkWin() {
-    let dLength = Math.abs(length / targetPotion.length);
-    let dRad = Math.abs(rad / targetPotion.rad);
-    let dCornerAngle = Math.abs(cornerAngle / targetPotion.cornerAngle);
+    if (win) return;
 
-    fade = 1.1 - (dLength + dRad + dCornerAngle) / 3;
+    let colors = Object.keys(targetPotion);
+    //number between 0 to 1 that represents how much the user is close to winning, we use this to set the fade too
+    let w = colors.reduce((acc, color) => {
+        let count = recipe.potions.filter(val => val === color).length;
+        acc += Math.min(count / targetPotion[color], 1) / colors.length;
+        return acc;
+    }, 0)
 
-    if (dLength + dRad + dCornerAngle > 2.9) {
-        ui.win();
-    }
+    console.log(w);
+
+    fade = Math.min(Math.max(w, 0.95), 0.05);
 }
 
 export function restart() {
@@ -95,7 +99,7 @@ export function restart() {
     color = 310;
     fade = 0.07;
 
-    length = 5;
+    length = 15;
     targetLength = 5;
     randLength = 0;
 
@@ -133,7 +137,7 @@ function resetCam() {
 
 function drawPoint(x, y) {
     ctx.beginPath();
-    ctx.arc(x, y, 30, 0, Math.PI * 2);
+    ctx.arc(x, y, 20, 0, Math.PI * 2);
     ctx.stroke();
 }
 
@@ -275,7 +279,7 @@ function drawNextSegment() {
     }
 
     //draw flower points
-    let i = 0;
+    let i = performance.now();
     while (i < flowerPoints.length - 1) {
 
         //line brightness is determined by length, the shorter the brighter
@@ -284,25 +288,26 @@ function drawNextSegment() {
         let l = Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
         l = Math.floor(l / width * 2 * 15);
 
-        ctx.strokeStyle = '#fff' + l.toString(16)
+        ctx.strokeStyle = '#ffff';// + l.toString(16)
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
         ctx.stroke();
 
         i++;
+
+        //draw random circle on point
+        ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
+        ctx.beginPath();
+        ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
+        ctx.fill();
     }
 
 
-    //draw random circle on point
-    // ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
-    // ctx.beginPath();
-    // ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
-    // ctx.fill();
 }
 
 function logState() {
-    console.log('seg length: ' + length + ' |cornder rad: ' + rad + ' |corner angle: ' + cornerAngle);
+    console.log('seg length: ' + targetLength + ' |cornder rad: ' + targetRad + ' |corner angle: ' + targetCornerAngle);
 }
 
 function render(d) {
@@ -325,10 +330,6 @@ function render(d) {
     length += dLength;
     randLength = Math.abs(dLength * 10);
     if (dLength < 0.01) length = targetLength;
-
-    checkWin();
-    // console.log(checkWin());
-
 }
 
 
@@ -394,17 +395,24 @@ function flashColor(c) {
 
 //potion buttons
 export function addBlue() {
+    if (recipe.full) return;
     setSegLength(targetLength + 100);
+    recipe.add('blue');
     flashColor("blue");
+    checkWin();
 }
 
 export function addRed() {
     setCornerRad(targetRad + 50);
+    recipe.add('red');
     flashColor("red");
+    checkWin();
 }
 
 
 export function addGreen() {
     setCornerAngle(targetCornerAngle + Math.PI / 7)
     flashColor("green");
+    recipe.add('green');
+    checkWin();
 } 

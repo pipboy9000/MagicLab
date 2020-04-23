@@ -137,7 +137,7 @@ canvas {
   display: inline-block;
   border: 3px solid white;
   border-radius: 7px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 label {
@@ -176,6 +176,8 @@ label {
   align-items: center;
   justify-content: space-evenly;
   margin: 10px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .potions > button > i {
@@ -237,6 +239,7 @@ label {
 }
 
 #recipe{
+  box-shadow: #141414 0px 6px;
   min-height: 52px;
   display: flex;
   align-items: center;
@@ -263,8 +266,13 @@ label {
 #recipe > .red {
   background: #ff1d1d;
 }
+
 #recipe > .green {
   background: #23ef29;
+}
+
+#recipe > .grey {
+  background: #888;
 }
 
 #ui {
@@ -287,4 +295,12 @@ label {
   width: 250px;
   height: 250px;
   opacity: 1;
+}
+
+#ui > #msg {
+  width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,13 +1,44 @@
 let display = document.getElementById("recipe");
 
+export let potions = [];
+export let max = 5;
+export let full = false;
+
 export function add(color) {
-    display.style.opacity = '1';
-    let el = document.createElement('i')
-    el.classList = 'fas fa-vial  ' + color;
-    display.appendChild(el);
+    if (potions.length < max)
+        potions.push(color);
+
+    if (potions.length === max) {
+        full = true;
+    }
+
+    render();
 }
 
 export function restart() {
+    potions = [];
+    full = false;
+    render();
+}
+
+function render() {
+
     display.innerHTML = '';
-    display.style.opacity = '0';
+
+    for (let i = 0; i < max; i++) {
+
+        let el = document.createElement('i')
+
+        if (i < potions.length) {
+            el.classList = 'fas fa-vial  ' + potions[i];
+        } else {
+            el.classList = 'fas fa-vial  grey';
+        }
+        display.appendChild(el);
+    }
+}
+
+export function setSlots(num) {
+    max = num;
+    restart();
 }

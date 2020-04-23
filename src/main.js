@@ -29,16 +29,16 @@ function restart() {
 }
 
 function addBlue() {
+    if (recipe.full) return;
     pot.addBlue();
-    recipe.add('blue');
 }
 function addRed() {
+    if (recipe.full) return;
     pot.addRed();
-    recipe.add('red');
 }
 function addGreen() {
+    if (recipe.full) return;
     pot.addGreen();
-    recipe.add('green');
 }
 
 //input functions
@@ -52,7 +52,6 @@ function init() {
     document.getElementById("addBlue").addEventListener('mousedown', addBlue);
     document.getElementById("addRed").addEventListener('mousedown', addRed);
     document.getElementById("addGreen").addEventListener('mousedown', addGreen);
-
     document.getElementById("downloadCanvas").addEventListener('click', pot.download);
 
 }
