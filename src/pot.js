@@ -17,7 +17,7 @@ ctx.lineCap = 'round';
 let angle = 0;
 let color = 200;
 let fade = 0.07;
-let tranSpeed = 200;
+let tranSpeed = 50;
 
 //segment length
 let length;
@@ -80,24 +80,31 @@ function checkWin() {
     let colors = Object.keys(targetPotion);
     //number between 0 to 1 that represents how much the user is close to winning, we use this to set the fade too
     let w = colors.reduce((acc, color) => {
+
         let count = recipe.potions.filter(val => val === color).length;
-        acc += Math.min(count / targetPotion[color], 1) / colors.length;
+
+        acc += Math.min(count / targetPotion[color], 1) / recipe.max * targetPotion[color];
+
         return acc;
-    }, 0)
+
+    }, 0);
+
+    win = w === 1;
 
     console.log(w);
 
-    fade = Math.min(Math.max(w, 0.95), 0.05);
+    fade = 1 - Math.min(Math.max(w, 0.02), 0.95);
 }
 
 export function restart() {
+    win = false;
     active = true;
     x = startX;
     y = startY;
 
     angle = 0;
     color = 310;
-    fade = 0.07;
+    fade = 0.99;
 
     length = 15;
     targetLength = 5;
@@ -319,17 +326,25 @@ function render(d) {
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
     randCornerAngle = Math.abs(dAngle * 20);
-    if (dAngle < 0.0001) cornerAngle = targetCornerAngle;
+    if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
 
     let dRad = (targetRad - rad) / tranSpeed;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
-    if (dRad < 0.01) rad = targetRad;
+    if (dRad < 0.02) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed;
     length += dLength;
     randLength = Math.abs(dLength * 10);
-    if (dLength < 0.01) length = targetLength;
+    if (dLength < 0.05) length = targetLength;
+
+    let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
+
+    console.log(dAngle, dRad, dLength);
+
+    if (win && sattled && !ui.showMsg) {
+        ui.win();
+    }
 }
 
 
