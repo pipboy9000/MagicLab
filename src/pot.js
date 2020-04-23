@@ -57,9 +57,9 @@ let active = true;
 let win = false;
 
 let targetPotion = {
-    green: 3,
     blue: 1,
-    red: 1
+    green: 4,
+    red: 4
 }
 
 export function download() {
@@ -95,7 +95,7 @@ function checkWin() {
     console.log(w);
 
     fade = 1 - Math.min(Math.max(w, 0.02), 0.95);
-    // fade = 0.02;
+    // fade = 1 - Math.min(recipe.potions.length / recipe.max, 0.95);
 }
 
 export function restart() {
@@ -105,7 +105,7 @@ export function restart() {
     y = startY;
 
     angle = 0;
-    color = 200;
+    color = 307;
     fade = 0.99;
 
     length = 15;
@@ -428,7 +428,7 @@ export function addRed() {
 
 
 export function addGreen() {
-    setCornerAngle(targetCornerAngle + Math.PI / 7)
+    setCornerAngle(targetCornerAngle + Math.PI / 3)
     flashColor("green");
     recipe.add('green');
     checkWin();
