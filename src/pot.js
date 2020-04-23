@@ -95,7 +95,7 @@ function checkWin() {
     console.log(w);
 
     fade = 1 - Math.min(Math.max(w, 0.02), 0.95);
-    fade = 0.02;
+    // fade = 0.02;
 }
 
 export function restart() {
