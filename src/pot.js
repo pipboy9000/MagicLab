@@ -92,8 +92,6 @@ function checkWin() {
 
     win = w === 1;
 
-    console.log(w);
-
     fade = 1 - Math.min(Math.max(w, 0.02), 0.95);
     // fade = 1 - Math.min(recipe.potions.length / recipe.max, 0.95);
 }
@@ -342,7 +340,7 @@ function render(d) {
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
 
-    console.log(dAngle, dRad, dLength);
+    // console.log(dAngle, dRad, dLength);
 
     if (win && sattled && !ui.showMsg) {
         ui.win();
@@ -428,7 +426,7 @@ export function addRed() {
 
 
 export function addGreen() {
-    setCornerAngle(targetCornerAngle + Math.PI / 3)
+    setCornerAngle(targetCornerAngle + Math.PI / 7)
     flashColor("green");
     recipe.add('green');
     checkWin();
