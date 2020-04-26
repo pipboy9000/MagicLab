@@ -1,4 +1,4 @@
-let msg = document.getElementById('msg');
+let winDiv = document.getElementById('win');
 let ui = document.getElementById('ui');
 let canvas = document.getElementById('canvas');
 
@@ -9,14 +9,12 @@ function init() {
     ui.style.height = canvas.clientHeight + "px";
 }
 export function win() {
-    msg.style.color = "#ff4d4da6";
-    msg.style.fontSize = "220px";
-    msg.innerHTML = '<i class="fas fa-heart"></i>';
+    winDiv.style.display = 'flex';
     showMsg = true;
 }
 
 export function restart() {
-    msg.innerHTML = '';
+    winDiv.style.display = 'none';
     showMsg = false;
 }
 

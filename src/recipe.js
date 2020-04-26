@@ -38,7 +38,13 @@ function render() {
     }
 }
 
-export function setSlots(num) {
-    max = num;
+export function loadLevel(data) {
+    let total = Object.keys(data).reduce((acc, color) => {
+        acc += data[color];
+        return acc;
+    }, 0);
+
+    max = total;
+
     restart();
 }

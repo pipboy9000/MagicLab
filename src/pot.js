@@ -309,8 +309,11 @@ function drawNextSegment() {
         ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
         ctx.fill();
     }
+}
 
-
+export function loadLevel(l) {
+    targetPotion = l;
+    restart();
 }
 
 function logState() {

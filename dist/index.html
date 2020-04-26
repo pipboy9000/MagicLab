@@ -24,17 +24,19 @@
         <header>
             <i id="menuBtn" class="fas fa-th"></i>
         </header>
-        <canvas id="canvas" width="800" height="800"></canvas>
+        <div class="screen">
+            <div id="ui">
+                <div id="target">
+
+                </div>
+                <div id="win">
+                    <i class="fas fa-heart"></i>
+                </div>
+            </div>
+            <canvas id="canvas" width="800" height="800"></canvas>
+        </div>
         <div id="levelSelect">
             <div id="levelsList"></div>
-        </div>
-        <div id="ui">
-            <div id="target">
-
-            </div>
-            <div id="msg">
-
-            </div>
         </div>
         <div id="recipe" class="recipe">
 
@@ -78,6 +80,7 @@
             flex-direction: column;
             align-items: center;
             max-width: 500px;
+            max-height: 100vh;
             margin-left: auto;
             margin-right: auto;
         }

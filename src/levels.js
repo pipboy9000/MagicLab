@@ -1,6 +1,11 @@
-let levelsDiv = document.getElementById('levelsList');
+import { loadLevel } from './main';
+
+let div = document.getElementById('levelSelect');
+let listDiv = document.getElementById('levelsList');
 
 export let levels;
+
+let currentLevel = 0;
 
 export function log() {
     console.log(levels);
@@ -24,13 +29,18 @@ export function addLevel(potions) {
 }
 
 function render() {
-    levelsDiv.innerHTML = "";
+    listDiv.innerHTML = "";
 
     levels.forEach((l, i) => {
         let item = document.createElement('div');
         item.classList.add('levelsItem');
         item.style.backgroundImage = "url(static/level_" + i + ".png)";
-        levelsDiv.appendChild(item);
+        item.onclick = () => {
+            currentLevel = i;
+            loadLevel(i, levels[i]);
+            hide();
+        };
+        listDiv.appendChild(item);
     });
 }
 
@@ -50,3 +60,11 @@ function load() {
 }
 
 load();
+
+export function show() {
+    div.style.display = 'flex';
+}
+
+export function hide() {
+    div.style.display = 'none';
+}

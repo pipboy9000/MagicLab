@@ -317,6 +317,16 @@ label {
     justify-content: center;
 }
 
+#win{
+  color : #ff4d4da6;
+  font-size : 220px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header {
   width: 100%;
   max-width: 800px;
@@ -335,10 +345,15 @@ header > i {
   align-items: center;
 }
 
+.screen {
+  width: 100%;
+  height: 100%;
+}
+
 #levelSelect {
   position: absolute;
   display: flex;
-  background: black;
+  background: #00000073;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -352,7 +367,8 @@ header > i {
 }
 
 .levelsItem {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background-size: contain;
+  background-color: #00000073;
 }
