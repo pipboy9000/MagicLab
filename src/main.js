@@ -1,13 +1,7 @@
 import * as pot from './pot.js';
 import * as recipe from './recipe.js';
-import * as target from './target.js';
-import { levels, addLevel } from './levels.js';
+import * as levels from './levels.js';
 import './style.css';
-
-export function loadLevel(i, data) {
-    pot.loadLevel(data);
-    recipe.loadLevel(data);
-}
 
 function setSegLength(e) {
     pot.setSegLength(e.target.value);
@@ -59,6 +53,7 @@ function init() {
     document.getElementById("addRed").addEventListener('mousedown', addRed);
     document.getElementById("addGreen").addEventListener('mousedown', addGreen);
     document.getElementById("downloadCanvas").addEventListener('click', pot.download);
+    document.getElementById("levelsBtn").addEventListener('click', levels.show);
 
 }
 

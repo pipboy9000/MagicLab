@@ -1,11 +1,13 @@
-import { loadLevel } from './main';
+import * as pot from './pot.js';
+import * as recipe from './recipe.js';
+import * as ui from './ui.js';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
 
 export let levels;
 
-let currentLevel = 0;
+export let currentLevel = 0;
 
 export function log() {
     console.log(levels);
@@ -37,7 +39,7 @@ function render() {
         item.style.backgroundImage = "url(static/level_" + i + ".png)";
         item.onclick = () => {
             currentLevel = i;
-            loadLevel(i, levels[i]);
+            loadLevel(i);
             hide();
         };
         listDiv.appendChild(item);
@@ -57,6 +59,17 @@ function load() {
         levels = [];
     }
     render();
+}
+
+export function loadLevel(i) {
+    pot.loadLevel(levels[i]);
+    recipe.loadLevel(levels[i]);
+    ui.loadLevel(i);
+    currentLevel = i;
+}
+
+export function loadNext() {
+    loadLevel((currentLevel + 1) % levels.length);
 }
 
 load();
