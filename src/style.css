@@ -353,8 +353,9 @@ header > i {
 
 #levelSelect {
   position: absolute;
-  display: flex;
-  background: #00000073;
+  display: none;
+  background: #070707c4;
+  box-shadow: black 0px 20px 40px;
   width: 100%;
   align-items: center;
   justify-content: center;

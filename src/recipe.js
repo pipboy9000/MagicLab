@@ -1,7 +1,7 @@
 let display = document.getElementById("recipe");
 
 export let potions = [];
-export let max = 9;
+export let max = 3;
 export let full = false;
 
 export function add(color) {

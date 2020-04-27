@@ -56,11 +56,7 @@ let targetCamPosY = startY;
 let active = true;
 let win = false;
 
-let targetPotion = {
-    blue: 1,
-    green: 4,
-    red: 4
-}
+let targetPotion = {};
 
 export function download() {
     const a = document.createElement('a');

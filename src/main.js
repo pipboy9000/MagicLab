@@ -55,6 +55,8 @@ function init() {
     document.getElementById("downloadCanvas").addEventListener('click', pot.download);
     document.getElementById("levelsBtn").addEventListener('click', levels.show);
 
+    levels.loadLevel(levels.currentLevel);
+
 }
 
 window.addEventListener('load', init);
