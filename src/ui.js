@@ -6,18 +6,33 @@ let canvas = document.getElementById('canvas');
 let target = document.getElementById('target');
 
 export let showMsg = false;
+export let targetOpen = false;
+
+function openTarget() {
+    target.classList.add('target-large');
+    targetOpen = true;
+}
+
+function closeTarget() {
+    target.classList.remove('target-large')
+    targetOpen = false;
+}
 
 target.onmouseenter = () => {
-    target.classList.add('target-large')
+    openTarget();
 }
 
 
 target.onmouseout = () => {
-    target.classList.remove('target-large')
+    closeTarget();
 }
 
 target.onclick = () => {
-    target.classList.remove('target-large')
+    if (targetOpen) {
+        closeTarget();
+    } else {
+        openTarget();
+    }
 }
 
 function init() {
