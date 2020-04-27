@@ -38,17 +38,18 @@
         <div id="levelSelect">
             <div id="levelsList"></div>
         </div>
-        <div id="recipe" class="recipe">
+        <div class="bottom">
+            <div id="recipe" class="recipe">
 
+            </div>
+            <div class="potions">
+                <button id="addBlue"><i class="fas fa-vial"></i></button>
+                <button id="addRed"><i class="fas fa-vial"></i></button>
+                <button id="addGreen"><i class="fas fa-vial"></i></button>
+                <!-- <button id="addOrange"><i class="fas fa-vial"></i></button> -->
+            </div>
+            <button id="restart">X</button>
         </div>
-        <div class="potions">
-            <button id="addBlue"><i class="fas fa-vial"></i></button>
-            <button id="addRed"><i class="fas fa-vial"></i></button>
-            <button id="addGreen"><i class="fas fa-vial"></i></button>
-            <!-- <button id="addOrange"><i class="fas fa-vial"></i></button> -->
-        </div>
-        <button id="restart">X</button>
-
     </div>
     <div class="controls">
         <label>Minimum Segment Length</label>
@@ -76,6 +77,7 @@
             margin: 0;
             overflow: hidden;
             background: radial-gradient(circle at center, #391030, #030e16);
+            display: flex;
         }
 
         .main {

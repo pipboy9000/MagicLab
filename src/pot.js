@@ -84,8 +84,8 @@ function checkWin() {
 
     win = w === 1;
 
-    fade = 1 - Math.min(Math.max(w, 0.02), 0.95);
-    // fade = 1 - Math.min(recipe.potions.length / recipe.max, 0.95);
+    fade = 1 - Math.min(Math.max(w, 0.01), 0.95);
+    console.log(fade);
 }
 
 export function restart() {
