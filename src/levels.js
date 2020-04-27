@@ -1,11 +1,12 @@
 import * as pot from './pot.js';
 import * as recipe from './recipe.js';
 import * as ui from './ui.js';
+import data from './levelsData';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
 
-export let levels;
+export let levels = data;
 
 export let currentLevel = 0;
 
@@ -46,18 +47,8 @@ function render() {
     });
 }
 
-function save() {
-    localStorage.setItem('levels', JSON.stringify(levels));
-}
-
 function load() {
-    levels = localStorage.getItem('levels');
-    if (levels) {
-        levels = JSON.parse(levels)
-    }
-    else {
-        levels = [];
-    }
+    levels = data;
     render();
 }
 

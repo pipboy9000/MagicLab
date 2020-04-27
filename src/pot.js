@@ -67,10 +67,6 @@ export function download() {
     document.body.removeChild(a);
 }
 
-function gameOver() {
-    active = false;
-}
-
 function checkWin() {
     if (win) return;
 
