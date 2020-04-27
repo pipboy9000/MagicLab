@@ -37,6 +37,10 @@ export function restart() {
 
 export function loadLevel(i) {
     target.style.backgroundImage = `url(static/level_${i}.png)`;
+    target.classList.add('target-large');
+    setTimeout(() => {
+        target.classList.remove('target-large');
+    }, 1500)
 }
 
 window.addEventListener('load', init);
