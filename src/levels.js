@@ -47,7 +47,7 @@ function render() {
     });
 }
 
-function load() {
+function init() {
     levels = data;
     render();
 }
@@ -63,7 +63,7 @@ export function loadNext() {
     loadLevel((currentLevel + 1) % levels.length);
 }
 
-load();
+window.addEventListener('load', init);
 
 export function show() {
     div.style.display = 'flex';
