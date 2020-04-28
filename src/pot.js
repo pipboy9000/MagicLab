@@ -11,13 +11,13 @@ let halfHeight = height / 2;
 
 ctx.fillStyle = "black"
 ctx.strokeStyle = "#29ff7e"
-ctx.lineWidth = 3;
+ctx.lineWidth = 5;
 ctx.lineCap = 'round';
 
 let angle = 0;
 let color = 200;
 let fade = 0.07;
-let tranSpeed = 50;
+let tranSpeed = 60;
 
 //segment length
 let length;
@@ -222,7 +222,7 @@ function drawNextSegment() {
     ctx.shadowBlur = 20;
     ctx.shadowColor = `hsl(${hue},70%,70%`;
     ctx.strokeStyle = `hsl(${hue},100%,50%`;;
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 7;
 
     //line outline
     ctx.beginPath();
@@ -235,7 +235,7 @@ function drawNextSegment() {
     ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 5;
     ctx.strokeStyle = "white";
 
     //line
@@ -323,19 +323,19 @@ function render(d) {
     randCornerAngle = Math.abs(dAngle * 20);
     if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
 
-    let dRad = (targetRad - rad) / tranSpeed;
+    let dRad = (targetRad - rad) / tranSpeed * 2;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
     if (dRad < 0.02) rad = targetRad;
 
-    let dLength = (targetLength - length) / tranSpeed;
+    let dLength = (targetLength - length) / tranSpeed * 2;
     length += dLength;
     randLength = Math.abs(dLength * 10);
-    if (dLength < 0.05) length = targetLength;
+    if (dLength < 0.1) length = targetLength;
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
 
-    // console.log(dAngle, dRad, dLength);
+    console.log(dAngle, dRad, dLength);
 
     if (win && sattled && !ui.showMsg) {
         ui.win();
