@@ -268,39 +268,39 @@ function drawNextSegment() {
 
     let avg = avgPoints();
     setCamPos(avg.x, avg.y);
-    drawPoint(avg.x, avg.y)
+    // drawPoint(avg.x, avg.y)
 
     centerCanvas();
 
     //reset when off screen
-    if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
-        restart();
-    }
+    // if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
+    //     restart();
+    // }
 
-    //draw flower points
-    let i = performance.now();
-    while (i < flowerPoints.length - 1) {
+    // //draw flower points
+    // let i = performance.now();
+    // while (i < flowerPoints.length - 1) {
 
-        //line brightness is determined by length, the shorter the brighter
-        let p1 = flowerPoints[i];
-        let p2 = flowerPoints[i + 1];
-        let l = Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
-        l = Math.floor(l / width * 2 * 15);
+    //     //line brightness is determined by length, the shorter the brighter
+    //     let p1 = flowerPoints[i];
+    //     let p2 = flowerPoints[i + 1];
+    //     let l = Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
+    //     l = Math.floor(l / width * 2 * 15);
 
-        ctx.strokeStyle = '#ffff';// + l.toString(16)
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
+    //     ctx.strokeStyle = '#ffff';// + l.toString(16)
+    //     ctx.beginPath();
+    //     ctx.moveTo(p1.x, p1.y);
+    //     ctx.lineTo(p2.x, p2.y);
+    //     ctx.stroke();
 
-        i++;
+    //     i++;
 
-        //draw random circle on point
-        ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
-        ctx.beginPath();
-        ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
-        ctx.fill();
-    }
+    //     //draw random circle on point
+    //     ctx.fillStyle = '#fff' + parseInt(Math.floor(Math.random() * 16), 16);
+    //     ctx.beginPath();
+    //     ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
+    //     ctx.fill();
+    // }
 }
 
 export function loadLevel(l) {
