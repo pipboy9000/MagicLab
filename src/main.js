@@ -40,6 +40,10 @@ function addGreen() {
     if (recipe.full) return;
     pot.addGreen();
 }
+function addOrange() {
+    if (recipe.full) return;
+    pot.addOrange();
+}
 
 //input functions
 function init() {
@@ -52,6 +56,7 @@ function init() {
     document.getElementById("addBlue").addEventListener('mousedown', addBlue);
     document.getElementById("addRed").addEventListener('mousedown', addRed);
     document.getElementById("addGreen").addEventListener('mousedown', addGreen);
+    document.getElementById("addOrange").addEventListener('mousedown', addOrange);
     document.getElementById("downloadCanvas").addEventListener('click', pot.download);
     document.getElementById("levelsBtn").addEventListener('click', levels.show);
 

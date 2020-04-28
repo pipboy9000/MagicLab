@@ -38,13 +38,9 @@ function render() {
     }
 }
 
-export function loadLevel(data) {
-    let total = Object.keys(data).reduce((acc, color) => {
-        acc += data[color];
-        return acc;
-    }, 0);
+export function loadLevel({ potionsNum }) {
 
-    max = total;
+    max = potionsNum;
 
     restart();
 }

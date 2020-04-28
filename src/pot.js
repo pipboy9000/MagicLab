@@ -70,23 +70,42 @@ export function download() {
 function checkWin() {
     if (win) return;
 
-    let colors = Object.keys(targetPotion);
-    //number between 0 to 1 that represents how much the user is close to winning, we use this to set the fade too
-    let w = colors.reduce((acc, color) => {
+    let dLength = Math.abs(targetPotion.targetLength - targetLength) / targetPotion.targetLength;
+    let dRad = Math.abs(targetPotion.targetRad - targetRad) / targetPotion.targetRad;
+    let dAngle = Math.abs(targetPotion.targetCornerAngle - targetCornerAngle) / targetPotion.targetCornerAngle;
 
-        let count = recipe.potions.filter(val => val === color).length;
+    // console.log(dLength, dRad, dAngle);
+    if (dLength == 0 && dRad == 0 && dAngle == 0) {
+        win = true;
+    }
 
-        acc += Math.min(count / targetPotion[color], 1) / recipe.max * targetPotion[color];
+    fade = (dLength + dRad + dAngle) / 3
 
-        return acc;
+    fade = Math.min(Math.max(fade, 0.05), 0.95);
 
-    }, 0);
-
-    win = w === 1;
-
-    fade = 1 - Math.min(Math.max(w, 0.01), 0.95);
     console.log(fade);
 }
+
+// function checkWin() {
+//     if (win) return;
+
+//     let colors = Object.keys(targetPotion);
+//     //number between 0 to 1 that represents how much the user is close to winning, we use this to set the fade too
+//     let w = colors.reduce((acc, color) => {
+
+//         let count = recipe.potions.filter(val => val === color).length;
+
+//         acc += Math.min(count / targetPotion[color], 1) / recipe.max * targetPotion[color];
+
+//         return acc;
+
+//     }, 0);
+
+//     win = w === 1;
+
+//     fade = 1 - Math.min(Math.max(w, 0.01), 0.95);
+//     console.log(fade);
+// }
 
 export function restart() {
     win = false;
@@ -180,13 +199,10 @@ function avgPoints() {
 }
 
 function fadeCanvas() {
-    // ctx.fillStyle = "rgba(0,0,0," + fade + ")";
-    // ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
-
     ctx.save();
     ctx.globalAlpha = fade;
     ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = '#FFF';
+    ctx.fillStyle = '#000';
     ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
     ctx.restore();
 
@@ -335,7 +351,7 @@ function render(d) {
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
 
-    console.log(dAngle, dRad, dLength);
+    // console.log(dAngle, dRad, dLength);
 
     if (win && sattled && !ui.showMsg) {
         ui.win();
@@ -372,31 +388,32 @@ export function setFade(val) {
 }
 
 function flashColor(c) {
+    // return;
     switch (c) {
         case 'blue':
             ctx.save();
-            ctx.fillStyle = '#aaf2';
+            ctx.fillStyle = '#aaf1';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'green':
             ctx.save();
-            ctx.fillStyle = '#afa2';
+            ctx.fillStyle = '#afa1';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'red':
             ctx.save();
-            ctx.fillStyle = '#faa2';
+            ctx.fillStyle = '#faa1';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'white':
             ctx.save();
-            ctx.fillStyle = '#fff8';
+            ctx.fillStyle = '#fff1';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
@@ -419,8 +436,14 @@ export function addRed() {
     checkWin();
 }
 
-
 export function addGreen() {
+    setCornerAngle(targetCornerAngle + Math.PI / 7)
+    flashColor("green");
+    recipe.add('green');
+    checkWin();
+}
+
+export function addOrange() {
     setCornerAngle(targetCornerAngle + Math.PI / 7)
     flashColor("green");
     recipe.add('green');

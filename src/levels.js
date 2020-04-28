@@ -1,14 +1,15 @@
 import * as pot from './pot.js';
 import * as recipe from './recipe.js';
 import * as ui from './ui.js';
-import data from './levelsData';
+import { stages } from './levelsData';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
 
-export let levels = data;
-
+export let currentStage = 0;
 export let currentLevel = 0;
+
+export let levels;
 
 export function log() {
     console.log(levels);
@@ -48,7 +49,7 @@ function render() {
 }
 
 function init() {
-    levels = data;
+    levels = stages[currentStage].levels;
     render();
 }
 
