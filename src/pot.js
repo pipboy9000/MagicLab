@@ -392,28 +392,35 @@ function flashColor(c) {
     switch (c) {
         case 'blue':
             ctx.save();
-            ctx.fillStyle = '#aaf1';
+            ctx.fillStyle = '#aaf2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'green':
             ctx.save();
-            ctx.fillStyle = '#afa1';
+            ctx.fillStyle = '#afa2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'red':
             ctx.save();
-            ctx.fillStyle = '#faa1';
+            ctx.fillStyle = '#faa2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
 
         case 'white':
             ctx.save();
-            ctx.fillStyle = '#fff1';
+            ctx.fillStyle = '#fff2';
+            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+            ctx.restore();
+            break;
+
+        case 'orange':
+            ctx.save();
+            ctx.fillStyle = '#faf2';
             ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
             ctx.restore();
             break;
@@ -444,8 +451,30 @@ export function addGreen() {
 }
 
 export function addOrange() {
-    setCornerAngle(targetCornerAngle + Math.PI / 7)
-    flashColor("green");
-    recipe.add('green');
+    //this potion multipplies potions already in the mix
+    let reduce = recipe.potions.reduce((acc, color) => {
+        if (!acc[color]) {
+            acc[color] = 1;
+        } else {
+            acc[color] += 1
+        }
+
+        return acc;
+    }, {});
+
+    if (reduce.green) {
+        setCornerAngle(targetCornerAngle + reduce.green * Math.PI / 7)
+    }
+
+    if (reduce.red) {
+        setCornerRad(targetRad + reduce.red * 50);
+    }
+
+    if (reduce.blue) {
+        setSegLength(targetLength + reduce.blue * 100);
+    }
+
+    recipe.add('orange');
+
     checkWin();
 } 
