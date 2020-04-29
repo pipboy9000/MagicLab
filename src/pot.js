@@ -289,9 +289,9 @@ function drawNextSegment() {
     centerCanvas();
 
     //reset when off screen
-    // if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
-    //     restart();
-    // }
+    if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
+        restart();
+    }
 
     // //draw flower points
     // let i = performance.now();
@@ -451,6 +451,9 @@ export function addGreen() {
 }
 
 export function addOrange() {
+
+    recipe.add('orange');
+
     //this potion multipplies potions already in the mix
     let reduce = recipe.potions.reduce((acc, color) => {
         if (!acc[color]) {
@@ -462,19 +465,20 @@ export function addOrange() {
         return acc;
     }, {});
 
+    let selfMul = reduce.orange;
+
     if (reduce.green) {
-        setCornerAngle(targetCornerAngle + reduce.green * Math.PI / 7)
+        setCornerAngle(targetCornerAngle + selfMul * reduce.green * Math.PI / 7)
     }
 
     if (reduce.red) {
-        setCornerRad(targetRad + reduce.red * 50);
+        setCornerRad(targetRad + selfMul * reduce.red * 50);
     }
 
     if (reduce.blue) {
-        setSegLength(targetLength + reduce.blue * 100);
+        setSegLength(targetLength + selfMul * reduce.blue * 100);
     }
 
-    recipe.add('orange');
 
     checkWin();
 } 
