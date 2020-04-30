@@ -38,34 +38,30 @@ target.onclick = () => {
     }
 }
 
+winDiv.onclick = () => {
+    loadNext();
+}
+
 function init() {
     ui.style.width = canvas.clientWidth + "px";
     ui.style.height = canvas.clientHeight + "px";
-
-    winDiv.onanimationend = function () {
-        console.log('animation end');
-        if (!showMsg) {
-            winDiv.style.display = 'none';
-        }
-    }
 }
 export function showWin() {
-    console.log('showWin')
+
     winDiv.style.opacity = '1';
-    winDiv.classList.remove('fade-out');
-    winDiv.classList.add('fade-in');
-    winDiv.style.display = 'flex';
-    winDiv.onclick = () => {
-        loadNext();
-    }
+
+    winDiv.style.pointerEvents = 'unset'
+
     showMsg = true;
 }
 
+
 export function hideWin() {
+
     winDiv.style.opacity = '0';
-    winDiv.classList.remove('fade-in');
-    winDiv.classList.add('fade-out');
-    winDiv.onclick = null;
+
+    winDiv.style.pointerEvents = 'none';
+
     showMsg = false;
 }
 

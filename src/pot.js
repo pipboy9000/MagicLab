@@ -300,9 +300,9 @@ export function loadLevel(level, stage) {
     restart();
 }
 
-function logState() {
-    console.log('seg length: ' + targetLength + ' |cornder rad: ' + targetRad + ' |corner angle: ' + targetCornerAngle);
-}
+// function logState() {
+//     console.log('seg length: ' + targetLength + ' |cornder rad: ' + targetRad + ' |corner angle: ' + targetCornerAngle);
+// }
 
 function render(d) {
 
@@ -327,8 +327,6 @@ function render(d) {
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
 
-    // console.log(dAngle, dRad, dLength);
-
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
     }
@@ -342,17 +340,14 @@ render();
 //setters
 export function setSegLength(val) {
     targetLength = val;
-    logState();
 }
 
 export function setCornerRad(val) {
     targetRad = val;
-    logState();
 }
 
 export function setCornerAngle(val) {
     targetCornerAngle = val;
-    logState();
 }
 
 export function setColor(val) {
