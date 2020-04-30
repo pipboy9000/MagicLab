@@ -34,14 +34,13 @@ export function addLevel(potions) {
 
 function render() {
     listDiv.innerHTML = "";
-
     levels.forEach((l, i) => {
         let item = document.createElement('div');
         item.classList.add('levelsItem');
-        item.style.backgroundImage = "url(static/level_" + i + ".png)";
+        item.style.backgroundImage = `url(static/stage${currentStage}/level_${i}.png)`;
         item.onclick = () => {
             currentLevel = i;
-            loadLevel(i);
+            loadLevel(currentStage, i);
             hide();
         };
         listDiv.appendChild(item);
@@ -53,15 +52,30 @@ function init() {
     render();
 }
 
-export function loadLevel(i) {
-    pot.loadLevel(levels[i]);
-    recipe.loadLevel(levels[i]);
-    ui.loadLevel(i);
-    currentLevel = i;
+export function loadLevel(stageIdx, levelIdx) {
+
+    let stage = stages[stageIdx];
+
+    levels = stage.levels;
+
+    let level = stage.levels[levelIdx];
+
+    pot.loadLevel(level, stage);
+    recipe.loadLevel(level);
+    ui.loadLevel(stageIdx, levelIdx);
+
+    currentStage = stageIdx
+    currentLevel = levelIdx;
+
+    document.body.style.background = "radial-gradient(circle at center, #391030, #030e16)";
 }
 
 export function loadNext() {
-    loadLevel((currentLevel + 1) % levels.length);
+    if (currentLevel < stages[currentStage].levels.length) {
+        loadLevel(currentStage, currentLevel + 1);
+    } else if (currentStage < stages.length) {
+        loadLevel(currentStage + 1, 0);
+    }
 }
 
 window.addEventListener('load', init);

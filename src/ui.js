@@ -1,9 +1,12 @@
 import { loadNext } from './levels.js';
+import { addColor } from './pot.js';
+import { stages } from './levelsData';
 
 let winDiv = document.getElementById('win');
 let ui = document.getElementById('ui');
 let canvas = document.getElementById('canvas');
 let target = document.getElementById('target');
+let potionsDiv = document.getElementById('potions');
 
 export let showMsg = false;
 export let targetOpen = false;
@@ -41,7 +44,13 @@ function init() {
 }
 export function win() {
     winDiv.style.display = 'flex';
-    winDiv.onclick = () => { loadNext() }
+    winDiv.onclick = () => {
+        loadNext();
+    }
+
+    winDiv.ondblclick = () => {
+        loadNext();
+    }
     showMsg = true;
 }
 
@@ -50,12 +59,28 @@ export function restart() {
     showMsg = false;
 }
 
-export function loadLevel(i) {
-    target.style.backgroundImage = `url(static/level_${i}.png)`;
+export function loadLevel(stageIdx, levelIdx) {
+    restart();
+    target.style.backgroundImage = `url(static/stage${stageIdx}/level_${levelIdx}.png)`;
     target.classList.add('target-large');
     setTimeout(() => {
         target.classList.remove('target-large');
-    }, 1500)
+    }, 1500);
+
+    //render
+    potionsDiv.innerHTML = "";
+    stages[stageIdx].availableColors.forEach(color => {
+        let b = document.createElement('button');
+        b.className = 'potion ' + color;
+        b.onclick = () => { addColor(color) };
+
+        let i = document.createElement('i');
+        i.className = 'fas fa-vial';
+
+        b.appendChild(i);
+        potionsDiv.appendChild(b);
+    });
+
 }
 
 window.addEventListener('load', init);

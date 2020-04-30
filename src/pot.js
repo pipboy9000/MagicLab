@@ -15,7 +15,7 @@ ctx.lineWidth = 5;
 ctx.lineCap = 'round';
 
 let angle = 0;
-let color = 200;
+let color = 20;
 let fade = 0.07;
 let tranSpeed = 60;
 
@@ -86,27 +86,6 @@ function checkWin() {
     console.log(fade);
 }
 
-// function checkWin() {
-//     if (win) return;
-
-//     let colors = Object.keys(targetPotion);
-//     //number between 0 to 1 that represents how much the user is close to winning, we use this to set the fade too
-//     let w = colors.reduce((acc, color) => {
-
-//         let count = recipe.potions.filter(val => val === color).length;
-
-//         acc += Math.min(count / targetPotion[color], 1) / recipe.max * targetPotion[color];
-
-//         return acc;
-
-//     }, 0);
-
-//     win = w === 1;
-
-//     fade = 1 - Math.min(Math.max(w, 0.01), 0.95);
-//     console.log(fade);
-// }
-
 export function restart() {
     win = false;
     active = true;
@@ -114,7 +93,6 @@ export function restart() {
     y = startY;
 
     angle = 0;
-    color = 307;
     fade = 0.99;
 
     length = 15;
@@ -237,7 +215,7 @@ function drawNextSegment() {
     let hue = color % 360;
     ctx.shadowBlur = 20;
     ctx.shadowColor = `hsl(${hue},70%,70%`;
-    ctx.strokeStyle = `hsl(${hue},100%,50%`;;
+    ctx.strokeStyle = `hsl(${hue},100%,50%`;
     ctx.lineWidth = 7;
 
     //line outline
@@ -319,8 +297,9 @@ function drawNextSegment() {
     // }
 }
 
-export function loadLevel(l) {
-    targetPotion = l;
+export function loadLevel(level, stage) {
+    targetPotion = level;
+    color = stage.color;
     restart();
 }
 
@@ -354,7 +333,8 @@ function render(d) {
     // console.log(dAngle, dRad, dLength);
 
     if (win && sattled && !ui.showMsg) {
-        ui.win();
+        console.log("timeout")
+        setTimeout(ui.win, 500);
     }
 }
 
@@ -428,29 +408,33 @@ function flashColor(c) {
 }
 
 //potion buttons
-export function addBlue() {
+export function addRed() {
     if (recipe.full) return;
     setSegLength(targetLength + 100);
-    recipe.add('blue');
-    flashColor("blue");
-    checkWin();
-}
-
-export function addRed() {
-    setCornerRad(targetRad + 50);
     recipe.add('red');
-    flashColor("red");
+    flashColor('red');
     checkWin();
 }
 
 export function addGreen() {
-    setCornerAngle(targetCornerAngle + Math.PI / 7)
-    flashColor("green");
+    if (recipe.full) return;
+    setCornerRad(targetRad + 50);
     recipe.add('green');
+    flashColor('green');
+    checkWin();
+}
+
+export function addBlue() {
+    if (recipe.full) return;
+    setCornerAngle(targetCornerAngle + Math.PI / 7)
+    flashColor('blue');
+    recipe.add('blue');
     checkWin();
 }
 
 export function addOrange() {
+
+    if (recipe.full) return;
 
     recipe.add('orange');
 
@@ -481,4 +465,22 @@ export function addOrange() {
 
 
     checkWin();
-} 
+}
+
+export function addColor(color) {
+    if (recipe.full) return;
+    switch (color) {
+        case 'red':
+            addRed();
+            break;
+        case 'green':
+            addGreen();
+            break;
+        case 'blue':
+            addBlue();
+            break;
+        case 'orange':
+            addOrange();
+            break;
+    }
+}
