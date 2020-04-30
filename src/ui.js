@@ -41,26 +41,36 @@ target.onclick = () => {
 function init() {
     ui.style.width = canvas.clientWidth + "px";
     ui.style.height = canvas.clientHeight + "px";
+
+    winDiv.onanimationend = function () {
+        console.log('animation end');
+        if (!showMsg) {
+            winDiv.style.display = 'none';
+        }
+    }
 }
-export function win() {
+export function showWin() {
+    console.log('showWin')
+    winDiv.style.opacity = '1';
+    winDiv.classList.remove('fade-out');
+    winDiv.classList.add('fade-in');
     winDiv.style.display = 'flex';
     winDiv.onclick = () => {
-        loadNext();
-    }
-
-    winDiv.ondblclick = () => {
         loadNext();
     }
     showMsg = true;
 }
 
-export function restart() {
-    winDiv.style.display = 'none';
+export function hideWin() {
+    winDiv.style.opacity = '0';
+    winDiv.classList.remove('fade-in');
+    winDiv.classList.add('fade-out');
+    winDiv.onclick = null;
     showMsg = false;
 }
 
 export function loadLevel(stageIdx, levelIdx) {
-    restart();
+    if (showMsg) hideWin();
     target.style.backgroundImage = `url(static/stage${stageIdx}/level_${levelIdx}.png)`;
     target.classList.add('target-large');
     setTimeout(() => {

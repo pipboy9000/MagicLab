@@ -71,9 +71,9 @@ export function loadLevel(stageIdx, levelIdx) {
 }
 
 export function loadNext() {
-    if (currentLevel < stages[currentStage].levels.length) {
+    if (currentLevel < stages[currentStage].levels.length - 1) {
         loadLevel(currentStage, currentLevel + 1);
-    } else if (currentStage < stages.length) {
+    } else if (currentStage < stages.length - 1) {
         loadLevel(currentStage + 1, 0);
     }
 }

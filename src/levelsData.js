@@ -48,7 +48,7 @@ export let stages = [{
         potionsNum: 9
     }]
 }, {
-    color: 0,
+    color: 250,
     availableColors: ['red', 'green', 'blue'],
     levels: [{
         targetCornerAngle: 2.4683942278205517,

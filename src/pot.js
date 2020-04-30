@@ -74,7 +74,6 @@ function checkWin() {
     let dRad = Math.abs(targetPotion.targetRad - targetRad) / targetPotion.targetRad;
     let dAngle = Math.abs(targetPotion.targetCornerAngle - targetCornerAngle) / targetPotion.targetCornerAngle;
 
-    // console.log(dLength, dRad, dAngle);
     if (dLength == 0 && dRad == 0 && dAngle == 0) {
         win = true;
     }
@@ -82,8 +81,6 @@ function checkWin() {
     fade = (dLength + dRad + dAngle) / 3
 
     fade = Math.min(Math.max(fade, 0.05), 0.95);
-
-    console.log(fade);
 }
 
 export function restart() {
@@ -113,7 +110,7 @@ export function restart() {
 
     recipe.restart();
 
-    ui.restart();
+    ui.hideWin();
 }
 
 function resetCam() {
@@ -333,8 +330,7 @@ function render(d) {
     // console.log(dAngle, dRad, dLength);
 
     if (win && sattled && !ui.showMsg) {
-        console.log("timeout")
-        setTimeout(ui.win, 500);
+        ui.showWin();
     }
 }
 
