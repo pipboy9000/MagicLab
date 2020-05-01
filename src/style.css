@@ -372,6 +372,36 @@ header > i {
   min-height: 360px;
   box-sizing: border-box;
   overflow-y: auto;
+  flex-direction: column;
+}
+
+#levelSelect > div.arrows{
+  font-size: 40px;
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  justify-content: space-around;
+  color: white;
+  z-index: 2;
+  background: #0008;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#levelSelect > div.arrows > div.arrow{
+  width: 100%;
+  text-align: center;
+  transition: background-color 500ms;
+}
+
+#levelSelect > div.arrows > div.arrow{
+  width: 100%;
+  text-align: center;
+  transition: background-color 500ms;
+}
+
+#levelSelect > div.arrows > div.arrow:hover{
+  background: #ffffff2e;
 }
 
 #levelSelect > div.bg {

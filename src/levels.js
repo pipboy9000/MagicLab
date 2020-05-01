@@ -6,6 +6,8 @@ import { stages } from './levelsData';
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
 let bg = document.querySelector('#levelSelect > div.bg');
+let leftBtn = document.querySelector('#levelSelect > div.arrows > div#left');
+let rightBtn = document.querySelector('#levelSelect > div.arrows > div#right');
 
 export let currentStage = 0;
 export let currentLevel = 0;
@@ -34,6 +36,9 @@ export function addLevel(potions) {
 }
 
 function render() {
+
+    levels = stages[currentStage].levels;
+
     listDiv.innerHTML = "";
     levels.forEach((l, i) => {
         let item = document.createElement('div');
@@ -49,9 +54,25 @@ function render() {
 }
 
 function init() {
+
     levels = stages[currentStage].levels;
+
     bg.onclick = () => {
         hide();
+    }
+
+    leftBtn.onclick = () => {
+        if (currentStage > 0) {
+            currentStage--;
+            render();
+        }
+    }
+
+    rightBtn.onclick = () => {
+        if (currentStage < stages.length - 1) {
+            currentStage++;
+            render();
+        }
     }
     render();
 }

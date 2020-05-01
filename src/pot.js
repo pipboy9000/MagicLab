@@ -331,7 +331,7 @@ function render(d) {
 
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
-        ga('send', 'event', 'Progress', 'Win', 'pilot', currentStage * 10 + currentLevel);
+        ga('send', 'event', 'Progress', 'Win', 'pilot', currentStage * 100 + currentLevel);
     }
 }
 
