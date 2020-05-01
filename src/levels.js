@@ -5,6 +5,7 @@ import { stages } from './levelsData';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
+let bg = document.querySelector('#levelSelect > div.bg');
 
 export let currentStage = 0;
 export let currentLevel = 0;
@@ -49,6 +50,9 @@ function render() {
 
 function init() {
     levels = stages[currentStage].levels;
+    bg.onclick = () => {
+        hide();
+    }
     render();
 }
 

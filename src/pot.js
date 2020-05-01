@@ -446,7 +446,7 @@ export function addOrange() {
     let selfMul = reduce.orange;
 
     if (reduce.red) {
-        setSegLength(targetLength + selfMul * reduce.blue * 100);
+        setSegLength(targetLength + selfMul * reduce.red * 100);
     }
 
     if (reduce.green) {
