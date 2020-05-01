@@ -67,6 +67,8 @@ export function loadLevel(stageIdx, levelIdx) {
     currentStage = stageIdx
     currentLevel = levelIdx;
 
+    render();
+
     document.body.style.background = "radial-gradient(circle at center, #391030, #030e16)";
 }
 

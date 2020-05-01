@@ -1,5 +1,7 @@
 import * as recipe from './recipe.js';
 import * as ui from './ui.js'
+import { stages } from './levelsData.js';
+import { currentLevel, currentStage } from './levels.js';
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext("2d");
@@ -329,6 +331,7 @@ function render(d) {
 
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
+        ga('send', 'event', 'Progress', 'Win', 'pilot', currentStage * 10 + currentLevel);
     }
 }
 
@@ -442,18 +445,17 @@ export function addOrange() {
 
     let selfMul = reduce.orange;
 
-    if (reduce.green) {
-        setCornerAngle(targetCornerAngle + selfMul * reduce.green * Math.PI / 7)
-    }
-
     if (reduce.red) {
-        setCornerRad(targetRad + selfMul * reduce.red * 50);
-    }
-
-    if (reduce.blue) {
         setSegLength(targetLength + selfMul * reduce.blue * 100);
     }
 
+    if (reduce.green) {
+        setCornerRad(targetRad + selfMul * reduce.green * 50);
+    }
+
+    if (reduce.blue) {
+        setCornerAngle(targetCornerAngle + selfMul * reduce.blue * Math.PI / 7)
+    }
 
     checkWin();
 }
