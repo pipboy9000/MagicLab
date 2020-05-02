@@ -60,6 +60,8 @@ let win = false;
 
 let targetPotion = {};
 
+let levelStartAt;
+
 export function download() {
     const a = document.createElement('a');
     document.body.appendChild(a);
@@ -297,6 +299,7 @@ function drawNextSegment() {
 }
 
 export function loadLevel(level, stage) {
+    levelStartAt = Date.now();
     targetPotion = level;
     color = stage.color;
     restart();
@@ -331,7 +334,8 @@ function render(d) {
 
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
-        ga('send', 'event', 'Progress', 'Win', 'pilot', currentStage * 100 + currentLevel);
+        let levelTime = Math.floor(levelStartAt - Date.now() / 1000);
+        ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + 'level-' + currentLevel, levelTime);
     }
 }
 
