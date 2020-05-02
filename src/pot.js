@@ -268,7 +268,7 @@ function drawNextSegment() {
     centerCanvas();
 
     //reset when off screen
-    if (x > width + 50 || x < -50 || y > height + 50 || y < -50) {
+    if (x > width + 100 || x < -100 || y > height + 100 || y < -100) {
         restart();
     }
 
