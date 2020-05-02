@@ -40,6 +40,9 @@ function init() {
     document.getElementById("restart").addEventListener('mousedown', restart);
 
     levels.loadLevel(levels.currentStage, levels.currentLevel);
+
+    // Creates a default tracker.
+    ga('create', 'UA-76187604-22', 'auto');
 }
 
 window.addEventListener('load', init);
