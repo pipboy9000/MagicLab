@@ -335,7 +335,7 @@ function render(d) {
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
         let levelTime = Math.floor((Date.now() - levelStartAt) / 1000);
-        ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + 'level-' + currentLevel, levelTime);
+        ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + ' level-' + currentLevel, levelTime);
     }
 }
 
