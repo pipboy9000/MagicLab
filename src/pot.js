@@ -334,7 +334,7 @@ function render(d) {
 
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
-        let levelTime = Math.floor(levelStartAt - Date.now() / 1000);
+        let levelTime = Math.floor(Date.now() - levelStartAt / 1000);
         ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + 'level-' + currentLevel, levelTime);
     }
 }
