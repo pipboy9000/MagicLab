@@ -10,8 +10,8 @@ let leftBtn = document.querySelector('#levelSelect > div.arrows > div#left');
 let rightBtn = document.querySelector('#levelSelect > div.arrows > div#right');
 let currentPage = 0;
 
-export let currentStage = 0;
-export let currentLevel = 0;
+export let currentStage;
+export let currentLevel;
 
 export let levels;
 
@@ -56,7 +56,7 @@ function render() {
 
 function init() {
 
-    levels = stages[currentStage].levels;
+    levels = stages[0].levels;
 
     bg.onclick = () => {
         hide();
@@ -78,7 +78,18 @@ function init() {
     render();
 }
 
+function preloadImages(stageIdx) {
+    stages[stageIdx].levels.forEach((level, levelIdx) => {
+        let img = document.createElement('img');
+        img.src = `static/stage${stageIdx}/level_${levelIdx}.png`
+    });
+}
+
 export function loadLevel(stageIdx, levelIdx) {
+
+    if (stageIdx != currentStage) {
+        preloadImages(stageIdx);
+    }
 
     let stage = stages[stageIdx];
 
@@ -94,9 +105,9 @@ export function loadLevel(stageIdx, levelIdx) {
     currentLevel = levelIdx;
     currentPage = currentStage;
 
-    render();
+    document.body.style.background = `radial-gradient(circle at center, hsl(${stage.color},91%, 18%), #030e16)`;
 
-    document.body.style.background = "radial-gradient(circle at center, #391030, #030e16)";
+    render();
 }
 
 export function loadNext() {
