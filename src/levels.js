@@ -8,6 +8,7 @@ let listDiv = document.getElementById('levelsList');
 let bg = document.querySelector('#levelSelect > div.bg');
 let leftBtn = document.querySelector('#levelSelect > div.arrows > div#left');
 let rightBtn = document.querySelector('#levelSelect > div.arrows > div#right');
+let currentPage = 0;
 
 export let currentStage = 0;
 export let currentLevel = 0;
@@ -37,16 +38,16 @@ export function addLevel(potions) {
 
 function render() {
 
-    levels = stages[currentStage].levels;
+    levels = stages[currentPage].levels;
 
     listDiv.innerHTML = "";
     levels.forEach((l, i) => {
         let item = document.createElement('div');
         item.classList.add('levelsItem');
-        item.style.backgroundImage = `url(static/stage${currentStage}/level_${i}.png)`;
+        item.style.backgroundImage = `url(static/stage${currentPage}/level_${i}.png)`;
         item.onclick = () => {
             currentLevel = i;
-            loadLevel(currentStage, i);
+            loadLevel(currentPage, i);
             hide();
         };
         listDiv.appendChild(item);
@@ -62,15 +63,15 @@ function init() {
     }
 
     leftBtn.onclick = () => {
-        if (currentStage > 0) {
-            currentStage--;
+        if (currentPage > 0) {
+            currentPage--;
             render();
         }
     }
 
     rightBtn.onclick = () => {
-        if (currentStage < stages.length - 1) {
-            currentStage++;
+        if (currentPage < stages.length - 1) {
+            currentPage++;
             render();
         }
     }
@@ -91,6 +92,7 @@ export function loadLevel(stageIdx, levelIdx) {
 
     currentStage = stageIdx
     currentLevel = levelIdx;
+    currentPage = currentStage;
 
     render();
 
