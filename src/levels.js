@@ -2,7 +2,7 @@ import * as pot from './pot.js';
 import * as recipe from './recipe.js';
 import * as ui from './ui.js';
 import { stages } from './levelsData';
-import { isCompleted } from './progress';
+import { isCompleted, setLastPlayed } from './progress';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
@@ -18,23 +18,6 @@ export let levels;
 
 export function log() {
     console.log(levels);
-}
-
-export function addLevel(potions) {
-    let l = potions.reduce((acc, color) => {
-        if (acc[color]) {
-            acc[color] += 1
-        } else {
-            acc[color] = 1
-        }
-        return acc;
-    }, {})
-
-    levels.push(l);
-
-    save();
-
-    render();
 }
 
 function render() {
@@ -56,6 +39,10 @@ function render() {
         };
         listDiv.appendChild(item);
     });
+}
+
+export function levelWin() {
+    render();
 }
 
 function init() {
@@ -114,6 +101,8 @@ export function loadLevel(stageIdx, levelIdx) {
     currentPage = currentStage;
 
     document.body.style.background = `radial-gradient(circle at center, hsl(${stage.color},91%, 18%), #030e16)`;
+
+    setLastPlayed(currentStage, currentLevel);
 
     render();
 }

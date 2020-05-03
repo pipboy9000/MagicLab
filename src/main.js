@@ -1,7 +1,7 @@
 import * as pot from './pot.js';
 import * as recipe from './recipe.js';
 import * as levels from './levels.js';
-import { getLastPlayed } from './progress.js;';
+import { getLastPlayed } from './progress.js';
 import './style.css';
 
 // function setSegLength(e) {

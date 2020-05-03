@@ -1,7 +1,7 @@
 import * as recipe from './recipe.js';
 import * as ui from './ui.js'
 import { stages } from './levelsData.js';
-import { currentLevel, currentStage } from './levels.js';
+import { currentLevel, currentStage, levels, levelWin } from './levels.js';
 import * as progress from './progress';
 
 let canvas = document.getElementById('canvas');
@@ -336,6 +336,7 @@ function render(d) {
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
         progress.win(currentStage, currentLevel);
+        levelWin();
         let levelTime = Math.floor((Date.now() - levelStartAt) / 1000);
         ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + ' level-' + currentLevel, levelTime);
     }

@@ -221,6 +221,7 @@ label {
 
 
 #restart{
+  cursor: pointer;
   user-select: none;
   margin-bottom: 20px;
   background: #e8e8e8;
@@ -306,6 +307,7 @@ label {
   background-position: center;
   transition: all 200ms;
   opacity: 0.5;
+  cursor: pointer;
 }
 
 .target-large{
@@ -373,6 +375,7 @@ header > i {
   box-sizing: border-box;
   overflow-y: auto;
   flex-direction: column;
+  max-height: 100vh;
 }
 
 #levelSelect > div.arrows{
@@ -424,6 +427,9 @@ header > i {
     background: #070707c4;
   box-shadow: black 0px 20px 40px;
   z-index: 1;
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .levelsItem {
@@ -431,6 +437,7 @@ header > i {
   height: 150px;
   background-size: contain;
   transition: background-color 500ms;
+  cursor: pointer;
 }
 
 .levelsItem:hover {
