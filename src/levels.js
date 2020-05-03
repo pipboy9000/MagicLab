@@ -2,6 +2,7 @@ import * as pot from './pot.js';
 import * as recipe from './recipe.js';
 import * as ui from './ui.js';
 import { stages } from './levelsData';
+import { isCompleted } from './progress';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
@@ -45,6 +46,9 @@ function render() {
         let item = document.createElement('div');
         item.classList.add('levelsItem');
         item.style.backgroundImage = `url(static/stage${currentPage}/level_${i}.png)`;
+        if (!isCompleted(currentPage, i)) {
+            item.style.webkitFilter = 'grayscale(1)'
+        }
         item.onclick = () => {
             currentLevel = i;
             loadLevel(currentPage, i);

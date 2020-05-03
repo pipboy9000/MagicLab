@@ -388,6 +388,10 @@ header > i {
   box-sizing: border-box;
 }
 
+#levelsBtn{
+  cursor: pointer;
+}
+
 #levelSelect > div.arrows > div.arrow{
   width: 100%;
   text-align: center;

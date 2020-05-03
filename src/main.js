@@ -1,6 +1,7 @@
 import * as pot from './pot.js';
 import * as recipe from './recipe.js';
 import * as levels from './levels.js';
+import { getLastPlayed } from './progress.js;';
 import './style.css';
 
 // function setSegLength(e) {
@@ -39,7 +40,9 @@ function init() {
     document.getElementById("levelsBtn").addEventListener('click', levels.show);
     document.getElementById("restart").addEventListener('mousedown', restart);
 
-    levels.loadLevel(0, 0);
+    let lp = getLastPlayed();
+
+    levels.loadLevel(lp.stageIdx, lp.levelIdx);
 
     // Creates a default tracker.
     ga('create', 'UA-76187604-22', 'auto');
