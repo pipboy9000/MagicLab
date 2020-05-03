@@ -75,13 +75,32 @@ export function loadLevel(stageIdx, levelIdx) {
 
     //render
     potionsDiv.innerHTML = "";
+
     stages[stageIdx].availableColors.forEach(color => {
+
         let b = document.createElement('button');
         b.className = 'potion ' + color;
         b.onclick = () => { addColor(color) };
 
         let i = document.createElement('i');
-        i.className = 'fas fa-vial';
+        switch (color) {
+            case 'red':
+                i.className = "fas fa-star-of-life";
+                break;
+
+            case 'green':
+                i.className = "fas fa-circle-notch";
+                break;
+
+            case 'blue':
+                i.className = "fas fa-atom";
+                break;
+
+            case 'orange':
+                i.className = "fab fa-quinscape";
+                break;
+
+        }
 
         b.appendChild(i);
         potionsDiv.appendChild(b);
