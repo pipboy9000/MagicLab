@@ -87,8 +87,12 @@ function preloadImages(stageIdx) {
 
 export function loadLevel(stageIdx, levelIdx) {
 
+    //if we are in a new stage preload all the images for this stage and the next
     if (stageIdx != currentStage) {
         preloadImages(stageIdx);
+        if (stageIdx < stages.length - 1) {
+            preloadImages(stageIdx + 1)
+        }
     }
 
     let stage = stages[stageIdx];
