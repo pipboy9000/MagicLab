@@ -92,13 +92,13 @@ export function loadLevel(stageIdx, levelIdx) {
 
     let level = stage.levels[levelIdx];
 
-    pot.loadLevel(level, stage);
-    // recipe.loadLevel(level);
-    ui.loadLevel(stageIdx, levelIdx);
-
     currentStage = stageIdx
     currentLevel = levelIdx;
     currentPage = currentStage;
+
+    ui.loadLevel(stageIdx, levelIdx);
+
+    pot.loadLevel(level, stage);
 
     document.body.style.background = `radial-gradient(circle at center, hsl(${stage.color},91%, 18%), #030e16)`;
 

@@ -88,7 +88,7 @@ function checkWin() {
     fade = Math.min(Math.max(fade, 0.05), 0.95);
 }
 
-export function restart() {
+export function reset() {
     win = false;
     active = true;
     x = startX;
@@ -114,13 +114,13 @@ export function restart() {
     flashColor("white");
 
     // recipe.restart();
-
     ui.hideWin();
 }
 
 function resetCam() {
     targetCamPosX = startX;
     targetCamPosY = startY;
+
     camPosX = startX;
     camPosY = startY;
     ctx.setTransform(
@@ -140,6 +140,7 @@ function drawPoint(x, y) {
 }
 
 function setCamPos(x, y) {
+
     targetCamPosX = x;
     targetCamPosY = y;
 }
@@ -270,7 +271,8 @@ function drawNextSegment() {
 
     //reset when off screen
     if (x > width + 100 || x < -100 || y > height + 100 || y < -100) {
-        restart();
+        ui.reset();
+        reset();
     }
 
     // //draw flower points
@@ -303,7 +305,7 @@ export function loadLevel(level, stage) {
     levelStartAt = Date.now();
     targetPotion = level;
     color = stage.color;
-    restart();
+    reset();
 }
 
 // function logState() {
@@ -345,9 +347,7 @@ function render(d) {
 }
 
 
-restart();
-
-render();
+//reset();
 
 //setters
 export function setSegLength(val) {
@@ -485,4 +485,9 @@ export function addColor(color) {
             addOrange();
             break;
     }
+}
+
+export function init() {
+    reset();
+    render();
 }

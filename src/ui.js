@@ -1,4 +1,4 @@
-import { loadNext } from './levels.js';
+import { loadNext, currentStage, currentLevel } from './levels.js';
 import { setSegLength, setCornerRad, setCornerAngle } from './pot.js';
 import { stages } from './levelsData';
 
@@ -50,7 +50,7 @@ function init() {
 }
 
 export function reset() {
-
+    render(currentStage, currentLevel);
 }
 
 export function showWin() {
@@ -76,17 +76,12 @@ export function hideWin() {
     showMsg = false;
 }
 
-export function loadLevel(stageIdx, levelIdx) {
-    if (showMsg) hideWin();
+function render(stageIdx, levelIdx) {
+
+    //target img
     target.style.backgroundImage = `url(static/stage${stageIdx}/level_${levelIdx}.png)`;
-    target.classList.add('target-large');
-    setTimeout(() => {
-        target.classList.remove('target-large');
-    }, 1500);
 
-    //render
-    // potionsDiv.innerHTML = "";
-
+    //sliders
     sliders.innerHTML = "";
 
     stages[stageIdx].availableColors.forEach((color, idx) => {
@@ -128,9 +123,9 @@ export function loadLevel(stageIdx, levelIdx) {
                 i.className = "fas fa-atom";
                 break;
 
-            case 'orange':
-                i.className = "fab fa-quinscape";
-                break;
+            // case 'orange':
+            //     i.className = "fab fa-quinscape";
+            //     break;
 
         }
         if (idx % 2 == 0) {
@@ -146,7 +141,15 @@ export function loadLevel(stageIdx, levelIdx) {
 
         sliders.appendChild(d);
     });
+}
 
+export function loadLevel(stageIdx, levelIdx) {
+    if (showMsg) hideWin();
+    openTarget();
+    setTimeout(() => {
+        closeTarget();
+    }, 1500);
+    render(stageIdx, levelIdx);
 }
 
 window.addEventListener('load', init);
