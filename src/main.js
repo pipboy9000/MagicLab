@@ -1,5 +1,5 @@
 import * as pot from './pot.js';
-import * as recipe from './recipe.js';
+// import * as recipe from './recipe.js';
 import * as levels from './levels.js';
 import { getLastPlayed } from './progress.js';
 import './style.css';
@@ -26,7 +26,7 @@ import './style.css';
 
 function restart() {
     pot.restart();
-    recipe.restart();
+    // recipe.restart();
 }
 
 //input functions

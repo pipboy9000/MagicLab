@@ -45,12 +45,27 @@
             </div>
         </div>
         <div class="bottom">
-            <div id="recipe" class="recipe">
+            <!-- <div id="recipe" class="recipe">
 
-            </div>
+            </div> -->
 
-            <div class="potions" id="potions">
+            <div id="sliders">
+                <div class="slider">
+                    <div></div>
+                    <input type="range" min="0" max="200" value="100" id="segLength">
+                    <i class="fas fa-star-of-life"></i>
+                </div>
 
+                <div class="slider">
+                    <i class="fas fa-star-of-life">
+                    </i><input type="range" min="1" max="200" value="20" id="cornerRad">
+                    <div></div>
+                </div>
+                <div class="slider">
+                    <div></div>
+                    <input type="range" min="0" max="6.2831" value="0.7853981634" step="0.001" id="cornerAngle">
+                    <i class="fas fa-star-of-life"></i>
+                </div>
             </div>
 
             <button id="restart"><i class="fas fa-times"></i></button>

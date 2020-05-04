@@ -1,4 +1,4 @@
-import * as recipe from './recipe.js';
+// import * as recipe from './recipe.js';
 import * as ui from './ui.js'
 import { stages } from './levelsData.js';
 import { currentLevel, currentStage, levels, levelWin } from './levels.js';
@@ -113,7 +113,7 @@ export function restart() {
 
     flashColor("white");
 
-    recipe.restart();
+    // recipe.restart();
 
     ui.hideWin();
 }
@@ -319,17 +319,19 @@ function render(d) {
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
     randCornerAngle = Math.abs(dAngle * 20);
-    if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
+    // if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
 
     let dRad = (targetRad - rad) / tranSpeed * 2;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
-    if (dRad < 0.02) rad = targetRad;
+    // if (dRad < 0.02) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed * 2;
     length += dLength;
     randLength = Math.abs(dLength * 10);
-    if (dLength < 0.1) length = targetLength;
+    // if (dLength < 0.1) length = targetLength;
+
+    // console.log(dRad, dLength, dAngle)
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
 

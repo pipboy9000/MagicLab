@@ -1,5 +1,5 @@
 import * as pot from './pot.js';
-import * as recipe from './recipe.js';
+// import * as recipe from './recipe.js';
 import * as ui from './ui.js';
 import { stages } from './levelsData';
 import { isCompleted, setLastPlayed } from './progress';
@@ -93,7 +93,7 @@ export function loadLevel(stageIdx, levelIdx) {
     let level = stage.levels[levelIdx];
 
     pot.loadLevel(level, stage);
-    recipe.loadLevel(level);
+    // recipe.loadLevel(level);
     ui.loadLevel(stageIdx, levelIdx);
 
     currentStage = stageIdx
