@@ -325,6 +325,7 @@ label {
 }
 
 #win{
+  position: absolute;
   color : #ffffff8f;
   font-size : 220px;
   width: 100%;
@@ -336,6 +337,11 @@ label {
   text-shadow: 0 0 10px #00ff2b00, 0 0 30px #ff005f;
   opacity: 0;
   transition: opacity .5s;
+}
+
+#win > .top-heart{
+  position: absolute;
+  transition: transform .5s ease-out 0.5s;
 }
 
 header {

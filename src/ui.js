@@ -3,6 +3,7 @@ import { addColor } from './pot.js';
 import { stages } from './levelsData';
 
 let winDiv = document.getElementById('win');
+let topHeart = winDiv.getElementsByClassName('top-heart')[0];
 let ui = document.getElementById('ui');
 let canvas = document.getElementById('canvas');
 let target = document.getElementById('target');
@@ -50,6 +51,8 @@ export function showWin() {
 
     winDiv.style.opacity = '1';
 
+    topHeart.style.transform = 'translateY(-20px)';
+
     winDiv.style.pointerEvents = 'unset'
 
     showMsg = true;
@@ -59,6 +62,8 @@ export function showWin() {
 export function hideWin() {
 
     winDiv.style.opacity = '0';
+
+    topHeart.style.transform = '';
 
     winDiv.style.pointerEvents = 'none';
 
