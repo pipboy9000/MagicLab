@@ -77,8 +77,23 @@ export function hideWin() {
     showMsg = false;
 }
 
+function disableSliders() {
+    Object.keys(sliders).forEach(color => {
+        sliders[color].disabled = true;
+    });
+}
+
+function enableSliders() {
+    Object.keys(sliders).forEach(color => {
+        sliders[color].disabled = false;
+    });
+}
+
 export function snapSlidersTo(len, rad, ang) {
     let count = 0;
+
+    disableSliders();
+
     let interval = setInterval(() => {
         Object.keys(sliders).forEach(color => {
             switch (color) {
@@ -97,6 +112,7 @@ export function snapSlidersTo(len, rad, ang) {
         count++;
         if (count > 20) {
             clearInterval(interval);
+            enableSliders();
         }
     }, 15);
 }
