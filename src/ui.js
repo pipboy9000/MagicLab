@@ -7,7 +7,8 @@ let topHeart = winDiv.getElementsByClassName('top-heart')[0];
 let ui = document.getElementById('ui');
 let canvas = document.getElementById('canvas');
 let target = document.getElementById('target');
-let sliders = document.getElementById('sliders');
+let slidersDiv = document.getElementById('sliders');
+let sliders;
 
 export let showMsg = false;
 export let targetOpen = false;
@@ -49,7 +50,8 @@ function init() {
 }
 
 export function reset() {
-    render(currentStage, currentLevel);
+    snapSlidersTo(0, 0, Math.PI / 4);
+    // render(currentStage, currentLevel);
 }
 
 export function showWin() {
@@ -75,19 +77,43 @@ export function hideWin() {
     showMsg = false;
 }
 
+export function snapSlidersTo(len, rad, ang) {
+    let count = 0;
+    let interval = setInterval(() => {
+        Object.keys(sliders).forEach(color => {
+            switch (color) {
+                case 'red':
+                    sliders[color].valueAsNumber += (len - sliders[color].valueAsNumber) / 5;
+                    break;
+                case 'green':
+                    sliders[color].valueAsNumber += (rad - sliders[color].valueAsNumber) / 5;
+                    break;
+                case 'blue':
+                    sliders[color].valueAsNumber += (ang - sliders[color].valueAsNumber) / 5;
+                    break;
+            }
+        })
+
+        count++;
+        if (count > 20) {
+            clearInterval(interval);
+        }
+    }, 15);
+}
+
 function render(stageIdx, levelIdx) {
 
     //target img
     target.style.backgroundImage = `url(static/stage${stageIdx}/level_${levelIdx}.png)`;
 
     //sliders
-    sliders.innerHTML = "";
+    slidersDiv.innerHTML = "";
+    sliders = {};
 
     stages[stageIdx].availableColors.forEach((color, idx) => {
 
         let d = document.createElement('div');
         d.className = "slider " + color;
-        // <input type="range" min="0" max="6.2831" value="0.7853981634" step="0.001" id="cornerAngle"></input>
         let fillerDiv = document.createElement('div') // filler div
         let input = document.createElement('input');
         input.type = 'range';
@@ -95,31 +121,31 @@ function render(stageIdx, levelIdx) {
 
         switch (color) {
             case 'red':
-                /* <input type="range" min="0" max="200" value="100" id="segLength"></input> */
                 input.oninput = (e) => { setSegLength(e.target.value) };
                 input.min = 0;
                 input.max = 400;
                 input.value = 0;
                 i.className = "fas fa-star-of-life";
+                sliders.red = input;
                 break;
 
             case 'green':
-                // </i><input type="range" min="1" max="200" value="20" id="cornerRad"></input>
                 input.oninput = (e) => { setCornerRad(e.target.value) };
                 input.min = 0;
                 input.max = 400;
                 input.value = 0;
                 i.className = "fas fa-circle-notch";
+                sliders.green = input;
                 break;
 
             case 'blue':
-                // <input type="range" min="0" max="6.2831" value="0.7853981634" step="0.001" id="cornerAngle"></input>
                 input.oninput = (e) => { setCornerAngle(e.target.value) };
-                input.min = 0;
+                input.min = Math.PI / 4;
                 input.max = 6.2831;
                 input.step = 0.001;
                 input.value = Math.PI / 4;
                 i.className = "fas fa-atom";
+                sliders.blue = input;
                 break;
         }
 
@@ -134,7 +160,7 @@ function render(stageIdx, levelIdx) {
 
         }
 
-        sliders.appendChild(d);
+        slidersDiv.appendChild(d);
     });
 }
 

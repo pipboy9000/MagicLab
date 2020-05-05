@@ -15,11 +15,11 @@ let halfHeight = height / 2;
 ctx.fillStyle = "black"
 ctx.strokeStyle = "#29ff7e"
 ctx.lineWidth = 5;
-// ctx.lineCap = 'round';
+ctx.lineCap = 'round';
 
 let angle = 0;
 let color = 20;
-let fade = 0.07;
+let fade = 0.3;
 let tranSpeed = 30;
 
 //segment length
@@ -95,14 +95,14 @@ export function reset() {
     y = startY;
 
     angle = 0;
-    fade = 0.7;
+    fade = 0.3;
 
-    length = 15;
-    targetLength = 5;
+    length = 0;
+    targetLength = 0;
     randLength = 0;
 
-    rad = 1;
-    targetRad = 1;
+    rad = 0;
+    targetRad = 0;
     randRad = 0;
 
     cornerAngle = 1.5707963267948966192313216916398;
@@ -112,9 +112,6 @@ export function reset() {
     resetCam();
 
     flashColor("white");
-
-    // recipe.restart();
-    ui.hideWin();
 }
 
 function resetCam() {
@@ -228,15 +225,15 @@ function drawNextSegment() {
     // ctx.stroke();
 
     //joint outline
-    ctx.beginPath();
-    ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
-    ctx.stroke();
+    // ctx.beginPath();
+    // ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
+    // ctx.stroke();
 
 
     //line
     let grad = ctx.createLinearGradient(x, y, nextX, nextY);
     grad.addColorStop(0, `rgba(255,255,255,${1 - fade})`);
-    grad.addColorStop(1, 'white')
+    grad.addColorStop(0.9, 'white')
     ctx.lineWidth = 5;
     ctx.strokeStyle = grad;
     ctx.beginPath();
