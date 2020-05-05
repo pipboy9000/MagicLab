@@ -26,4 +26,6 @@ function init() {
     ga('create', 'UA-76187604-22', 'auto');
 }
 
+
+
 window.addEventListener('load', init);

@@ -8,7 +8,6 @@ let ui = document.getElementById('ui');
 let canvas = document.getElementById('canvas');
 let target = document.getElementById('target');
 let sliders = document.getElementById('sliders');
-// let potionsDiv = document.getElementById('potions');
 
 export let showMsg = false;
 export let targetOpen = false;
@@ -109,25 +108,21 @@ function render(stageIdx, levelIdx) {
                 input.oninput = (e) => { setCornerRad(e.target.value) };
                 input.min = 0;
                 input.max = 400;
-                input.value = 10;
+                input.value = 0;
                 i.className = "fas fa-circle-notch";
                 break;
 
             case 'blue':
                 // <input type="range" min="0" max="6.2831" value="0.7853981634" step="0.001" id="cornerAngle"></input>
                 input.oninput = (e) => { setCornerAngle(e.target.value) };
-                input.min = -6.2831;
+                input.min = 0;
                 input.max = 6.2831;
                 input.step = 0.001;
-                input.value = 0.7853981634;
+                input.value = Math.PI / 4;
                 i.className = "fas fa-atom";
                 break;
-
-            // case 'orange':
-            //     i.className = "fab fa-quinscape";
-            //     break;
-
         }
+
         if (idx % 2 == 0) {
             d.appendChild(fillerDiv);
             d.appendChild(input);

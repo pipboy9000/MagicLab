@@ -15,12 +15,12 @@ let halfHeight = height / 2;
 ctx.fillStyle = "black"
 ctx.strokeStyle = "#29ff7e"
 ctx.lineWidth = 5;
-ctx.lineCap = 'round';
+// ctx.lineCap = 'round';
 
 let angle = 0;
 let color = 20;
 let fade = 0.07;
-let tranSpeed = 60;
+let tranSpeed = 30;
 
 //segment length
 let length;
@@ -95,7 +95,7 @@ export function reset() {
     y = startY;
 
     angle = 0;
-    fade = 0.99;
+    fade = 0.7;
 
     length = 15;
     targetLength = 5;
@@ -221,21 +221,24 @@ function drawNextSegment() {
     ctx.strokeStyle = `hsl(${hue},100%,50%`;
     ctx.lineWidth = 7;
 
-    //line outline
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(nextX, nextY);
-    ctx.stroke();
+    // //line outline
+    // ctx.beginPath();
+    // ctx.moveTo(x, y);
+    // ctx.lineTo(nextX, nextY);
+    // ctx.stroke();
 
     //joint outline
     ctx.beginPath();
     ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
 
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "white";
 
     //line
+    let grad = ctx.createLinearGradient(x, y, nextX, nextY);
+    grad.addColorStop(0, `rgba(255,255,255,${1 - fade})`);
+    grad.addColorStop(1, 'white')
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = grad;
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(nextX, nextY);
@@ -275,7 +278,7 @@ function drawNextSegment() {
         reset();
     }
 
-    // //draw flower points
+    //draw flower points
     // let i = performance.now();
     // while (i < flowerPoints.length - 1) {
 
@@ -351,14 +354,17 @@ function render(d) {
 
 //setters
 export function setSegLength(val) {
+    console.log(val);
     targetLength = val;
 }
 
 export function setCornerRad(val) {
+    console.log(val);
     targetRad = val;
 }
 
 export function setCornerAngle(val) {
+    console.log(val);
     targetCornerAngle = val;
 }
 
