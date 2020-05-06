@@ -95,18 +95,18 @@ export function reset() {
     y = startY;
 
     angle = 0;
-    fade = 0.3;
+    fade = 0.25;
 
-    length = 0;
-    targetLength = 0;
+    length = 1;
+    targetLength = 137;
     randLength = 0;
 
-    rad = 0;
-    targetRad = 0;
+    rad = 1;
+    targetRad = 217;
     randRad = 0;
 
     cornerAngle = 1.5707963267948966192313216916398;
-    targetCornerAngle = 1.5707963267948966192313216916398;
+    targetCornerAngle = 5.4;
     randCornerAngle = 0;
 
     resetCam();
@@ -188,7 +188,6 @@ function fadeCanvas() {
 
 function drawNextSegment() {
 
-    //turn off glow before drawing fade layer
     fadeCanvas();
 
     if (!active) return;
@@ -211,40 +210,46 @@ function drawNextSegment() {
         flowerPoints.shift();
     }
 
+    let hue = color;
+
+    let grad1 = ctx.createLinearGradient(x, y, nextX, nextY);
+    grad1.addColorStop(0.1, `hsla(${hue},70%,90%,${(1 - fade) * 90}%)`);
+    grad1.addColorStop(1, '#fff');
+
+
     //outline
-    let hue = color % 360;
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = 50;
     ctx.shadowColor = `hsl(${hue},70%,70%`;
-    ctx.strokeStyle = `hsl(${hue},100%,50%`;
-    ctx.lineWidth = 7;
+    ctx.strokeStyle = grad1;
+    ctx.lineWidth = 15;
 
-    // //line outline
-    // ctx.beginPath();
-    // ctx.moveTo(x, y);
-    // ctx.lineTo(nextX, nextY);
-    // ctx.stroke();
-
-    //joint outline
-    // ctx.beginPath();
-    // ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
-    // ctx.stroke();
-
-
-    //line
-    let grad = ctx.createLinearGradient(x, y, nextX, nextY);
-    grad.addColorStop(0, `rgba(255,255,255,${1 - fade})`);
-    grad.addColorStop(0.9, 'white')
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = grad;
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(nextX, nextY);
     ctx.stroke();
 
-    //joint
+    //joint outline
     ctx.beginPath();
     ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
+
+
+    // //line
+    // let grad2 = ctx.createLinearGradient(x, y, nextX, nextY);
+    // grad2.addColorStop(0, `rgba(255,255,255,${1 - fade})`);
+    // grad2.addColorStop(1, 'white');
+
+    // ctx.lineWidth = 10;
+    // ctx.strokeStyle = grad2;
+    // ctx.beginPath();
+    // ctx.moveTo(x, y);
+    // ctx.lineTo(nextX, nextY);
+    // ctx.stroke();
+
+    // //joint
+    // ctx.beginPath();
+    // ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
+    // ctx.stroke();
 
     //set to arc endpoint
     x = cornerCenterX + Math.cos(nextAngle - Math.PI / 2) * cRad;
@@ -270,7 +275,7 @@ function drawNextSegment() {
     centerCanvas();
 
     //reset when off screen
-    if (x > width + 100 || x < -100 || y > height + 100 || y < -100) {
+    if (x > width + 200 || x < -200 || y > height + 200 || y < -200) {
         ui.reset();
         reset();
     }

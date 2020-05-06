@@ -50,8 +50,7 @@ function init() {
 }
 
 export function reset() {
-    snapSlidersTo(0, 0, Math.PI / 4);
-    // render(currentStage, currentLevel);
+    snapSlidersTo(1, 1, Math.PI / 4);
 }
 
 export function showWin() {
@@ -117,6 +116,11 @@ export function snapSlidersTo(len, rad, ang) {
     }, 15);
 }
 
+function checkWin() {
+    console.log('check win');
+
+}
+
 function render(stageIdx, levelIdx) {
 
     //target img
@@ -130,9 +134,13 @@ function render(stageIdx, levelIdx) {
 
         let d = document.createElement('div');
         d.className = "slider " + color;
-        let fillerDiv = document.createElement('div') // filler div
+
         let input = document.createElement('input');
         input.type = 'range';
+        input.onchange = () => { checkWin() };
+
+        let fillerDiv = document.createElement('div') // filler div
+
         let i = document.createElement('i');
 
         switch (color) {
@@ -173,7 +181,6 @@ function render(stageIdx, levelIdx) {
             d.appendChild(i);
             d.appendChild(input);
             d.appendChild(fillerDiv);
-
         }
 
         slidersDiv.appendChild(d);
@@ -181,7 +188,7 @@ function render(stageIdx, levelIdx) {
 }
 
 export function loadLevel(stageIdx, levelIdx) {
-    if (showMsg) hideWin();
+    hideWin();
     openTarget();
     setTimeout(() => {
         closeTarget();
