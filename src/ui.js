@@ -50,7 +50,7 @@ function init() {
 }
 
 export function reset() {
-    snapSlidersTo(1, 1, Math.PI / 4);
+    snapSlidersTo(1, 1, Math.PI / 2);
 }
 
 export function showWin() {
@@ -95,15 +95,16 @@ export function snapSlidersTo(len, rad, ang) {
 
     let interval = setInterval(() => {
         Object.keys(sliders).forEach(color => {
+            let slider = sliders[color];
             switch (color) {
                 case 'red':
-                    sliders[color].valueAsNumber += (len - sliders[color].valueAsNumber) / 5;
+                    slider.valueAsNumber += (len - slider.valueAsNumber) / 5;
                     break;
                 case 'green':
-                    sliders[color].valueAsNumber += (rad - sliders[color].valueAsNumber) / 5;
+                    slider.valueAsNumber += (rad - slider.valueAsNumber) / 5;
                     break;
                 case 'blue':
-                    sliders[color].valueAsNumber += (ang - sliders[color].valueAsNumber) / 5;
+                    slider.valueAsNumber += (ang - slider.valueAsNumber) / 5;
                     break;
             }
         })
@@ -164,10 +165,10 @@ function render(stageIdx, levelIdx) {
 
             case 'blue':
                 input.oninput = (e) => { setCornerAngle(e.target.value) };
-                input.min = Math.PI / 4;
+                input.min = Math.PI / 2;
                 input.max = 6.2831;
                 input.step = 0.001;
-                input.value = Math.PI / 4;
+                input.value = Math.PI / 2;
                 i.className = "fas fa-atom";
                 sliders.blue = input;
                 break;

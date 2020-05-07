@@ -49,7 +49,7 @@ export let stages = [{
     }]
 }, {
     color: 0,
-    availableColors: ['red', 'green', 'blue', 'orange'],
+    availableColors: ['red', 'green', 'blue'],
     levels: [{
         targetCornerAngle: 2.4683942278205517,
         targetRad: 1,

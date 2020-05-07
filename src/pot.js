@@ -19,7 +19,7 @@ ctx.lineCap = 'round';
 
 let angle = 0;
 let color = 20;
-let fade = 0.3;
+let fade = 0.05;
 let tranSpeed = 30;
 
 //segment length
@@ -95,18 +95,18 @@ export function reset() {
     y = startY;
 
     angle = 0;
-    fade = 0.25;
+    fade = 0.05;
 
     length = 1;
-    targetLength = 137;
+    targetLength = 1;
     randLength = 0;
 
     rad = 1;
-    targetRad = 217;
+    targetRad = 1;
     randRad = 0;
 
     cornerAngle = 1.5707963267948966192313216916398;
-    targetCornerAngle = 5.4;
+    targetCornerAngle = 1.5707963267948966192313216916398;
     randCornerAngle = 0;
 
     resetCam();
@@ -213,15 +213,15 @@ function drawNextSegment() {
     let hue = color;
 
     let grad1 = ctx.createLinearGradient(x, y, nextX, nextY);
-    grad1.addColorStop(0.1, `hsla(${hue},70%,90%,${(1 - fade) * 90}%)`);
+    grad1.addColorStop(0, `hsla(${hue},100%,100%,${(1 - fade) * 85}%)`);
     grad1.addColorStop(1, '#fff');
 
 
     //outline
     ctx.shadowBlur = 50;
-    ctx.shadowColor = `hsl(${hue},70%,70%`;
+    ctx.shadowColor = `hsla(${hue},70%,70%,${(1 - fade) * 100}%)`;
     ctx.strokeStyle = grad1;
-    ctx.lineWidth = 15;
+    ctx.lineWidth = 12;
 
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -233,13 +233,12 @@ function drawNextSegment() {
     ctx.arc(cornerCenterX, cornerCenterY, cRad, angle - Math.PI / 2, nextAngle - Math.PI / 2, false);
     ctx.stroke();
 
-
-    // //line
     // let grad2 = ctx.createLinearGradient(x, y, nextX, nextY);
-    // grad2.addColorStop(0, `rgba(255,255,255,${1 - fade})`);
+    // grad2.addColorStop(0, `hsla(${Math.floor(performance.now() / 100) % 360}, 100%, 50%, ${1 - fade}%)`);
     // grad2.addColorStop(1, 'white');
 
-    // ctx.lineWidth = 10;
+    // // //line
+    // ctx.lineWidth = 5;
     // ctx.strokeStyle = grad2;
     // ctx.beginPath();
     // ctx.moveTo(x, y);
@@ -326,21 +325,26 @@ function render(d) {
     let dAngle = (targetCornerAngle - cornerAngle) / tranSpeed;
     cornerAngle += dAngle;
     randCornerAngle = Math.abs(dAngle * 20);
-    // if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
+    if (dAngle < 0.0005) cornerAngle = targetCornerAngle;
 
     let dRad = (targetRad - rad) / tranSpeed * 2;
     rad += dRad;
     randRad = Math.abs(dRad * 10);
-    // if (dRad < 0.02) rad = targetRad;
+    if (dRad < 0.02) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed * 2;
+    if (dLength < 0.1) {
+        console.log(length, targetLength);
+    }
     length += dLength;
     randLength = Math.abs(dLength * 10);
-    // if (dLength < 0.1) length = targetLength;
-
-    // console.log(dRad, dLength, dAngle)
+    if (dLength < 0.1) length = targetLength;
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
+    console.log(sattled);
+    // if (sattled) {
+    //     debugger;
+    // }
 
     if (win && sattled && !ui.showMsg) {
         ui.showWin();
@@ -351,23 +355,20 @@ function render(d) {
     }
 }
 
-
-//reset();
-
 //setters
 export function setSegLength(val) {
     console.log(val);
-    targetLength = val;
+    targetLength = +val;
 }
 
 export function setCornerRad(val) {
     console.log(val);
-    targetRad = val;
+    targetRad = +val;
 }
 
 export function setCornerAngle(val) {
     console.log(val);
-    targetCornerAngle = val;
+    targetCornerAngle = +val;
 }
 
 export function setColor(val) {
@@ -379,121 +380,110 @@ export function setFade(val) {
 }
 
 function flashColor(c) {
-    // return;
+
+    ctx.save();
+
     switch (c) {
         case 'blue':
-            ctx.save();
             ctx.fillStyle = '#aaf2';
-            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
-            ctx.restore();
             break;
 
         case 'green':
-            ctx.save();
             ctx.fillStyle = '#afa2';
-            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
-            ctx.restore();
             break;
 
         case 'red':
-            ctx.save();
             ctx.fillStyle = '#faa2';
-            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
-            ctx.restore();
             break;
 
         case 'white':
-            ctx.save();
             ctx.fillStyle = '#fff2';
-            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
-            ctx.restore();
             break;
 
         case 'orange':
-            ctx.save();
             ctx.fillStyle = '#faf2';
-            ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
-            ctx.restore();
-            break;
     }
+    ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
+    ctx.restore();
 }
+
 
 //potion buttons
-export function addRed() {
-    if (recipe.full) return;
-    setSegLength(targetLength + 100);
-    recipe.add('red');
-    flashColor('red');
-    checkWin();
-}
+// export function addRed() {
+//     if (recipe.full) return;
+//     setSegLength(targetLength + 100);
+//     recipe.add('red');
+//     flashColor('red');
+//     checkWin();
+// }
 
-export function addGreen() {
-    if (recipe.full) return;
-    setCornerRad(targetRad + 50);
-    recipe.add('green');
-    flashColor('green');
-    checkWin();
-}
+// export function addGreen() {
+//     if (recipe.full) return;
+//     setCornerRad(targetRad + 50);
+//     recipe.add('green');
+//     flashColor('green');
+//     checkWin();
+// }
 
-export function addBlue() {
-    if (recipe.full) return;
-    setCornerAngle(targetCornerAngle + Math.PI / 7)
-    flashColor('blue');
-    recipe.add('blue');
-    checkWin();
-}
+// export function addBlue() {
+//     if (recipe.full) return;
+//     setCornerAngle(targetCornerAngle + Math.PI / 7)
+//     flashColor('blue');
+//     recipe.add('blue');
+//     checkWin();
+// }
 
-export function addOrange() {
+// export function addOrange() {
 
-    if (recipe.full) return;
+//     if (recipe.full) return;
 
-    recipe.add('orange');
+//     recipe.add('orange');
 
-    //this potion multipplies potions already in the mix
-    let reduce = recipe.potions.reduce((acc, color) => {
-        if (!acc[color]) {
-            acc[color] = 1;
-        } else {
-            acc[color] += 1
-        }
+//     //this potion multipplies potions already in the mix
+//     let reduce = recipe.potions.reduce((acc, color) => {
+//         if (!acc[color]) {
+//             acc[color] = 1;
+//         } else {
+//             acc[color] += 1
+//         }
 
-        return acc;
-    }, {});
+//         return acc;
+//     }, {});
 
-    let selfMul = reduce.orange;
+//     let selfMul = reduce.orange;
 
-    if (reduce.red) {
-        setSegLength(targetLength + selfMul * reduce.red * 100);
-    }
+//     if (reduce.red) {
+//         setSegLength(targetLength + selfMul * reduce.red * 100);
+//     }
 
-    if (reduce.green) {
-        setCornerRad(targetRad + selfMul * reduce.green * 50);
-    }
+//     if (reduce.green) {
+//         setCornerRad(targetRad + selfMul * reduce.green * 50);
+//     }
 
-    if (reduce.blue) {
-        setCornerAngle(targetCornerAngle + selfMul * reduce.blue * Math.PI / 7)
-    }
+//     if (reduce.blue) {
+//         setCornerAngle(targetCornerAngle + selfMul * reduce.blue * Math.PI / 7)
+//     }
 
-    checkWin();
-}
+//     checkWin();
+// }
 
-export function addColor(color) {
-    if (recipe.full) return;
-    switch (color) {
-        case 'red':
-            addRed();
-            break;
-        case 'green':
-            addGreen();
-            break;
-        case 'blue':
-            addBlue();
-            break;
-        case 'orange':
-            addOrange();
-            break;
-    }
-}
+// export function addColor(color) {
+//     if (recipe.full) return;
+//     switch (color) {
+//         case 'red':
+//             addRed();
+//             break;
+//         case 'green':
+//             addGreen();
+//             break;
+//         case 'blue':
+//             addBlue();
+//             break;
+//         case 'orange':
+//             addOrange();
+//             break;
+//     }
+// }
 
 export function init() {
     reset();
