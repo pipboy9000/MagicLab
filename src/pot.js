@@ -333,18 +333,11 @@ function render(d) {
     if (dRad < 0.02) rad = targetRad;
 
     let dLength = (targetLength - length) / tranSpeed * 2;
-    if (dLength < 0.1) {
-        console.log(length, targetLength);
-    }
     length += dLength;
     randLength = Math.abs(dLength * 10);
     if (dLength < 0.1) length = targetLength;
 
     let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
-    console.log(sattled);
-    // if (sattled) {
-    //     debugger;
-    // }
 
     if (win && sattled && !ui.showMsg) {
         ui.showWin();

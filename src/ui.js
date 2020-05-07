@@ -118,8 +118,10 @@ export function snapSlidersTo(len, rad, ang) {
 }
 
 function checkWin() {
-    console.log('check win');
-
+    let level = stages[currentStage].levels[currentLevel];
+    console.log(level.targetLength - sliders.red.value)
+    console.log(level.targetRad - sliders.green.value)
+    console.log(level.targetCornerAngle - sliders.blue.value)
 }
 
 function render(stageIdx, levelIdx) {
