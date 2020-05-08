@@ -128,7 +128,12 @@ function checkWin() {
     console.log(lenDiff, angDiff, radDiff)
 
     if (lenDiff < 15 && radDiff < 15 && angDiff < 0.2) {
+        setSegLength(level.targetLength);
+        setCornerRad(level.targetRad);
+        setCornerAngle(level.targetCornerAngle);
+
         snapSlidersTo(level.targetLength, level.targetRad, level.targetCornerAngle);
+
         setTimeout(showWin, 1200);
     }
 }
