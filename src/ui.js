@@ -118,10 +118,19 @@ export function snapSlidersTo(len, rad, ang) {
 }
 
 function checkWin() {
+
     let level = stages[currentStage].levels[currentLevel];
-    console.log(level.targetLength - sliders.red.value)
-    console.log(level.targetRad - sliders.green.value)
-    console.log(level.targetCornerAngle - sliders.blue.value)
+
+    let lenDiff = Math.abs(level.targetLength - sliders.red.value);
+    let radDiff = Math.abs(level.targetRad - sliders.green.value);
+    let angDiff = Math.abs(level.targetCornerAngle - sliders.blue.value);
+
+    console.log(lenDiff, angDiff, radDiff)
+
+    if (lenDiff < 15 && radDiff < 15 && angDiff < 0.2) {
+        snapSlidersTo(level.targetLength, level.targetRad, level.targetCornerAngle);
+        setTimeout(showWin, 1200);
+    }
 }
 
 function render(stageIdx, levelIdx) {
