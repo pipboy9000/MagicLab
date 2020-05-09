@@ -40,10 +40,6 @@ target.onclick = () => {
     }
 }
 
-winDiv.onclick = () => {
-    loadNext();
-}
-
 function init() {
     ui.style.width = canvas.clientWidth + "px";
     ui.style.height = canvas.clientHeight + "px";
@@ -62,6 +58,8 @@ export function showWin() {
     winDiv.style.pointerEvents = 'unset'
 
     showMsg = true;
+
+    winDiv.onclick = loadNext;
 }
 
 
@@ -127,7 +125,7 @@ function checkWin() {
 
     console.log(lenDiff, angDiff, radDiff)
 
-    if (lenDiff < 25 && radDiff < 25 && angDiff < 0.3) {
+    if (lenDiff < 30 && radDiff < 30 && angDiff < 0.5) {
         setSegLength(level.targetLength);
         setCornerRad(level.targetRad);
         setCornerAngle(level.targetCornerAngle);
