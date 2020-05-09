@@ -1,5 +1,5 @@
 import { loadNext, currentStage, currentLevel } from './levels.js';
-import { setSegLength, setCornerRad, setCornerAngle } from './pot.js';
+import { setSegLength, setCornerRad, setCornerAngle, flashColor } from './pot.js';
 import { stages } from './levelsData';
 
 let winDiv = document.getElementById('win');
@@ -127,14 +127,15 @@ function checkWin() {
 
     console.log(lenDiff, angDiff, radDiff)
 
-    if (lenDiff < 15 && radDiff < 15 && angDiff < 0.2) {
+    if (lenDiff < 25 && radDiff < 25 && angDiff < 0.3) {
         setSegLength(level.targetLength);
         setCornerRad(level.targetRad);
         setCornerAngle(level.targetCornerAngle);
 
         snapSlidersTo(level.targetLength, level.targetRad, level.targetCornerAngle);
+        flashColor('white');
 
-        setTimeout(showWin, 1200);
+        setTimeout(showWin, 2000);
     }
 }
 
@@ -163,7 +164,7 @@ function render(stageIdx, levelIdx) {
         switch (color) {
             case 'red':
                 input.oninput = (e) => { setSegLength(e.target.value) };
-                input.min = 0;
+                input.min = 1;
                 input.max = 400;
                 input.value = 0;
                 i.className = "fas fa-star-of-life";
@@ -172,7 +173,7 @@ function render(stageIdx, levelIdx) {
 
             case 'green':
                 input.oninput = (e) => { setCornerRad(e.target.value) };
-                input.min = 0;
+                input.min = 1;
                 input.max = 400;
                 input.value = 0;
                 i.className = "fas fa-circle-notch";

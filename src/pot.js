@@ -221,7 +221,7 @@ function drawNextSegment() {
     ctx.shadowBlur = 50;
     ctx.shadowColor = `hsla(${hue},70%,70%,${(1 - fade) * 100}%)`;
     ctx.strokeStyle = grad1;
-    ctx.lineWidth = 12;
+    ctx.lineWidth = 8;
 
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -372,29 +372,29 @@ export function setFade(val) {
     fade = +val / 255;
 }
 
-function flashColor(c) {
+export function flashColor(c) {
 
     ctx.save();
 
     switch (c) {
         case 'blue':
-            ctx.fillStyle = '#aaf2';
+            ctx.fillStyle = '#aaf3';
             break;
 
         case 'green':
-            ctx.fillStyle = '#afa2';
+            ctx.fillStyle = '#afa3';
             break;
 
         case 'red':
-            ctx.fillStyle = '#faa2';
+            ctx.fillStyle = '#faa3';
             break;
 
         case 'white':
-            ctx.fillStyle = '#fff2';
+            ctx.fillStyle = '#fff3';
             break;
 
         case 'orange':
-            ctx.fillStyle = '#faf2';
+            ctx.fillStyle = '#faf3';
     }
     ctx.fillRect(-halfWidth + camPosX, -halfHeight + camPosY, width, height);
     ctx.restore();
