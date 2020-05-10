@@ -1,6 +1,7 @@
-import { loadNext, currentStage, currentLevel } from './levels.js';
-import { setSegLength, setCornerRad, setCornerAngle, flashColor } from './pot.js';
+import { loadNext, currentStage, currentLevel, levels, levelWin } from './levels.js';
+import { setSegLength, setCornerRad, setCornerAngle, flashColor, setFade } from './pot.js';
 import { stages } from './levelsData';
+import * as progress from './progress';
 
 let winDiv = document.getElementById('win');
 let topHeart = winDiv.getElementsByClassName('top-heart')[0];
@@ -123,9 +124,15 @@ function checkWin() {
     let radDiff = Math.abs(level.targetRad - sliders.green.value);
     let angDiff = Math.abs(level.targetCornerAngle - sliders.blue.value);
 
-    console.log(lenDiff, angDiff, radDiff)
+    //base fade = 0.05, fade on win = 0.02
+    //fade is a value between 0 and 0.03
+    let fade = 1 - (lenDiff / 400 + radDiff / 400 + angDiff / 6.2831) / 3;
+    fade *= 0.03;
+    setFade(0.05 - fade);
 
-    if (lenDiff < 30 && radDiff < 30 && angDiff < 0.5) {
+    // console.log(lenDiff, angDiff, radDiff)
+
+    if (lenDiff < 25 && radDiff < 25 && angDiff < 0.3) {
         setSegLength(level.targetLength);
         setCornerRad(level.targetRad);
         setCornerAngle(level.targetCornerAngle);
@@ -133,7 +140,10 @@ function checkWin() {
         snapSlidersTo(level.targetLength, level.targetRad, level.targetCornerAngle);
         flashColor('white');
 
-        setTimeout(showWin, 2000);
+        setTimeout(showWin, 1700);
+
+        setFade(0.02);
+        levelWin();
     }
 }
 

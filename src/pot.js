@@ -1,8 +1,9 @@
 // import * as recipe from './recipe.js';
+// import { stages } from './levelsData.js';
+// import { currentLevel, currentStage, levels, levelWin } from './levels.js';
+// import * as progress from './progress';
+
 import * as ui from './ui.js'
-import { stages } from './levelsData.js';
-import { currentLevel, currentStage, levels, levelWin } from './levels.js';
-import * as progress from './progress';
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext("2d");
@@ -19,7 +20,7 @@ ctx.lineCap = 'round';
 
 let angle = 0;
 let color = 20;
-let fade = 0.05;
+let fade = 0.04;
 let tranSpeed = 30;
 
 //segment length
@@ -60,8 +61,6 @@ let active = true;
 let win = false;
 
 let targetPotion = {};
-
-let levelStartAt;
 
 export function download() {
     const a = document.createElement('a');
@@ -218,10 +217,11 @@ function drawNextSegment() {
 
 
     //outline
-    ctx.shadowBlur = 50;
-    ctx.shadowColor = `hsla(${hue},70%,70%,${(1 - fade) * 100}%)`;
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = `hsla(${hue},80%,50%,${(1 - fade * 10) * 100}%)`;
+    console.log(ctx.shadowColor);
     ctx.strokeStyle = grad1;
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 7;
 
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -306,7 +306,6 @@ function drawNextSegment() {
 }
 
 export function loadLevel(level, stage) {
-    levelStartAt = Date.now();
     targetPotion = level;
     color = stage.color;
     reset();
@@ -337,15 +336,7 @@ function render(d) {
     randLength = Math.abs(dLength * 10);
     if (dLength < 0.1) length = targetLength;
 
-    let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength
-
-    if (win && sattled && !ui.showMsg) {
-        ui.showWin();
-        progress.win(currentStage, currentLevel);
-        levelWin();
-        let levelTime = Math.floor((Date.now() - levelStartAt) / 1000);
-        ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + ' level-' + currentLevel, levelTime);
-    }
+    // let sattled = cornerAngle === targetCornerAngle && rad === targetRad && length === targetLength;
 }
 
 //setters
@@ -369,7 +360,7 @@ export function setColor(val) {
 }
 
 export function setFade(val) {
-    fade = +val / 255;
+    fade = val
 }
 
 export function flashColor(c) {
@@ -390,7 +381,7 @@ export function flashColor(c) {
             break;
 
         case 'white':
-            ctx.fillStyle = '#fff3';
+            ctx.fillStyle = '#fff8';
             break;
 
         case 'orange':

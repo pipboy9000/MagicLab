@@ -2,7 +2,7 @@ import * as pot from './pot.js';
 // import * as recipe from './recipe.js';
 import * as ui from './ui.js';
 import { stages } from './levelsData';
-import { isCompleted, setLastPlayed } from './progress';
+import * as progress from './progress';
 
 let div = document.getElementById('levelSelect');
 let listDiv = document.getElementById('levelsList');
@@ -11,14 +11,12 @@ let leftBtn = document.querySelector('#levelSelect > div.arrows > div#left');
 let rightBtn = document.querySelector('#levelSelect > div.arrows > div#right');
 let currentPage = 0;
 
+let levelStartAt;
+
 export let currentStage;
 export let currentLevel;
 
 export let levels;
-
-export function log() {
-    console.log(levels);
-}
 
 function render() {
 
@@ -29,7 +27,7 @@ function render() {
         let item = document.createElement('div');
         item.classList.add('levelsItem');
         item.style.backgroundImage = `url(static/stage${currentPage}/level_${i}.png)`;
-        if (!isCompleted(currentPage, i)) {
+        if (!progress.isCompleted(currentPage, i)) {
             item.style.webkitFilter = 'grayscale(1)'
         }
         item.onclick = () => {
@@ -42,6 +40,9 @@ function render() {
 }
 
 export function levelWin() {
+    progress.win(currentStage, currentLevel);
+    let levelTime = Math.floor((Date.now() - levelStartAt) / 1000);
+    ga('send', 'event', 'Progress', 'Win', 'stage-' + currentStage + ' level-' + currentLevel, levelTime);
     render();
 }
 
@@ -86,6 +87,8 @@ export function loadLevel(stageIdx, levelIdx) {
         }
     }
 
+    levelStartAt = Date.now();
+
     let stage = stages[stageIdx];
 
     levels = stage.levels;
@@ -102,7 +105,7 @@ export function loadLevel(stageIdx, levelIdx) {
 
     document.body.style.background = `radial-gradient(circle at center, hsl(${stage.color},91%, 18%), #030e16)`;
 
-    setLastPlayed(currentStage, currentLevel);
+    progress.setLastPlayed(currentStage, currentLevel);
 
     render();
 }
